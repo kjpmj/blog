@@ -5,10 +5,12 @@ import { ITemplateProps } from '../interface';
 type IPostTemplatePorps = ITemplateProps<{
   html: string;
   title: string;
+  date: string;
 }>;
 
 const PostTemplate: React.FC<IPostTemplatePorps> = React.memo(props => {
   const { title, date, html } = props.pageContext;
+
   return (
     <Layout>
       <h2>{title}</h2>

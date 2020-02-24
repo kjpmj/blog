@@ -8,5 +8,6 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
     "esModuleInterop": true
-  }
+  },
+  "include": ["src/**/*"]
 }

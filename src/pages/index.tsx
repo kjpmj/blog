@@ -4,10 +4,11 @@ import { Query } from '../../types/graphql-types';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
+import { Button, Input } from 'react-uikit-kjpmj';
 
 const LatestPostListQuery = graphql`
   {
-    allMarkdownRemark {
+    allMarkdownRemark(sort: { fields: frontmatter___date, order: DESC }) {
       edges {
         node {
           frontmatter {
