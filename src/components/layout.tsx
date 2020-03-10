@@ -9,6 +9,7 @@ import React, { ReactNode } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 
 import Header from './header';
+import Category from './category';
 import './layout.css';
 
 type LayoutProps = {
@@ -29,6 +30,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Header siteTitle={data.site.siteMetadata.title} />
+      <Category />
       <div
         style={{
           margin: `0 auto`,
