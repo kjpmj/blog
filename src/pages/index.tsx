@@ -4,41 +4,48 @@ import { Query } from '../../types/graphql-types';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
-import { Button, Input } from 'react-uikit-kjpmj';
 
-const LatestPostListQuery = graphql`
-  {
-    allMarkdownRemark(sort: { fields: frontmatter___date, order: DESC }) {
-      edges {
-        node {
-          frontmatter {
-            title
-            path
-            date(formatString: "YYYY-MM-DD HH:mm:ss")
+const IndexPage: React.FC = () => {
+  const LatestPostListQuery = graphql`
+    {
+      allFile(
+        filter: { extension: { eq: "md" } }
+        sort: { fields: birthTime, order: DESC }
+      ) {
+        edges {
+          node {
+            name
+            relativeDirectory
+            base
+            childMarkdownRemark {
+              excerpt(truncate: false, pruneLength: 100)
+              frontmatter {
+                title
+              }
+            }
+            birthTime(fromNow: true, locale: "ko")
           }
-          html
-          excerpt(pruneLength: 200, truncate: false)
         }
       }
     }
-  }
-`;
+  `;
 
-const IndexPage: React.FC = () => {
-  const { allMarkdownRemark } = useStaticQuery<Query>(LatestPostListQuery);
+  const { allFile } = useStaticQuery<Query>(LatestPostListQuery);
 
   return (
     <Layout>
       <SEO title="Home" />
-      <h1>최근 작성한 게시글 목록</h1>
+      <h2>최근 작성한 게시글 목록</h2>
       <ul>
-        {allMarkdownRemark.edges.map(({ node }) => (
+        {allFile.edges.map(({ node }) => (
           <li key={node.id}>
             <h2>
-              <Link to={node.frontmatter.path}>{node.frontmatter.title}</Link>
+              <Link to={node.childMarkdownRemark.frontmatter.title}>
+                {node.childMarkdownRemark.frontmatter.title}
+              </Link>
             </h2>
-            <h3>{node.frontmatter.date}</h3>
-            <p>{node.excerpt}</p>
+            <h4>{node.birthTime}</h4>
+            <p>{node.childMarkdownRemark.excerpt}</p>
           </li>
         ))}
       </ul>
