@@ -27,6 +27,7 @@ function Category() {
   const dirList: string[] = allFile.nodes.map(
     ({ relativeDirectory }) => relativeDirectory,
   );
+
   const dirObj: Object = _.groupBy(dirList);
   const dirKeys: string[] = _.keys(dirObj);
 
