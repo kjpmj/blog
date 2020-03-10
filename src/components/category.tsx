@@ -24,6 +24,7 @@ function Category() {
   `);
 
   const { allFile } = data;
+
   const dirList: string[] = allFile.nodes.map(
     ({ relativeDirectory }) => relativeDirectory,
   );
