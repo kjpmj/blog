@@ -50,6 +50,12 @@ module.exports = {
               linkImagesToOriginal: false,
             },
           },
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              maintainCase: true,
+            },
+          },
         ],
       },
     },

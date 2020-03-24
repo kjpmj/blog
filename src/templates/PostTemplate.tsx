@@ -1,23 +1,23 @@
 import React from 'react';
-import Layout from '../components/layout';
+import PostLayout from '../components/PostLayout';
 import { ITemplateProps } from '../interface';
+import { MarkdownHeading } from '../../types/graphql-types';
 
 type IPostTemplatePorps = ITemplateProps<{
   html: string;
   title: string;
-  date: string;
+  headings: MarkdownHeading[];
 }>;
 
 const PostTemplate: React.FC<IPostTemplatePorps> = React.memo(props => {
-  const { title, date, html } = props.pageContext;
+  const { title, html, headings } = props.pageContext;
 
   return (
-    <Layout>
+    <PostLayout headings={headings}>
       <h2>{title}</h2>
-      <h4>{date}</h4>
       <hr />
       <div dangerouslySetInnerHTML={{ __html: html }}></div>
-    </Layout>
+    </PostLayout>
   );
 });
 

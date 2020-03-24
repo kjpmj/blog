@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, graphql, useStaticQuery } from 'gatsby';
 import { Query } from '../../types/graphql-types';
 
-import Layout from '../components/layout';
+import PostListLayout from '../components/PostListLayout';
 import SEO from '../components/seo';
 
 const IndexPage: React.FC = () => {
@@ -33,14 +33,14 @@ const IndexPage: React.FC = () => {
   const { allFile } = useStaticQuery<Query>(LatestPostListQuery);
 
   return (
-    <Layout>
+    <PostListLayout>
       <SEO title="Home" />
       <h2>최근 작성한 게시글 목록</h2>
       <ul>
         {allFile.edges.map(({ node }) => (
           <li key={node.id}>
             <h2>
-              <Link to={node.childMarkdownRemark.frontmatter.title}>
+              <Link to={`/${node.childMarkdownRemark.frontmatter.title}`}>
                 {node.childMarkdownRemark.frontmatter.title}
               </Link>
             </h2>
@@ -49,7 +49,7 @@ const IndexPage: React.FC = () => {
           </li>
         ))}
       </ul>
-    </Layout>
+    </PostListLayout>
   );
 };
 

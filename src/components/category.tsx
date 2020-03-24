@@ -4,17 +4,17 @@ import { Query } from '../../types/graphql-types';
 import { css } from '@emotion/core';
 import _ from 'lodash';
 
-const categoryContainerStyle = css`
-  position: fixed;
+const categoryWrapStyle = css`
+  /* position: fixed; */
 
-  @media (max-width: 1200px) {
+  /* @media (max-width: 1200px) {
     display: none;
-  }
+  } */
 `;
 
 function Category() {
   const data = useStaticQuery<Query>(graphql`
-    query CategoryQuery {
+    query {
       allFile(filter: { extension: { eq: "md" } }) {
         nodes {
           relativeDirectory
@@ -33,7 +33,7 @@ function Category() {
   const dirKeys: string[] = _.keys(dirObj);
 
   return (
-    <div css={categoryContainerStyle}>
+    <div css={categoryWrapStyle}>
       <h2>Category</h2>
       <div>
         {dirKeys.map(dir => (

@@ -14,6 +14,9 @@ export async function createPages({ actions, graphql }: CreatePagesArgs) {
               title
             }
             html
+            headings(depth: h2) {
+              value
+            }
           }
         }
       }
@@ -30,6 +33,7 @@ export async function createPages({ actions, graphql }: CreatePagesArgs) {
       context: {
         html: node.html,
         title: node.frontmatter.title,
+        headings: node.headings,
       },
       component: path.resolve(__dirname, '../templates/PostTemplate.tsx'),
     });
