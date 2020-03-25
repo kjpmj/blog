@@ -70,15 +70,16 @@ const PostLayout = ({ children, headings }: PostLayoutProps) => {
           <main>{children}</main>
         </div>
         <div css={PostIndexWrapStyle}>
-          {headings.map(heading => {
-            const value: string = heading.value.replace(/\s/g, '-');
+          {headings &&
+            headings.map(heading => {
+              const value: string = heading.value.replace(/\s/g, '-');
 
-            return (
-              <div key={heading.value}>
-                <a href={`#${value}`}>{heading.value}</a>
-              </div>
-            );
-          })}
+              return (
+                <div key={heading.value}>
+                  <a href={`#${value}`}>{heading.value}</a>
+                </div>
+              );
+            })}
         </div>
       </div>
     </>
