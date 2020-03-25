@@ -1,0 +1,31 @@
+@font-face {
+  font-family: 'NanumSquareRoundR';
+  src: url('../style/font/NanumSquareRoundR.woff2') format('woff2'),
+    url('../style/font/NanumSquareRoundR.woff') format('woff'),
+    url('../style/font/NanumSquareRoundR.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'NanumSquareRoundL';
+  src: url('../style/font/NanumSquareRoundL.woff2') format('woff2'),
+    url('../style/font/NanumSquareRoundL.woff') format('woff'),
+    url('../style/font/NanumSquareRoundL.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'NanumSquareRoundB';
+  src: url('../style/font/NanumSquareRoundB.woff2') format('woff2'),
+    url('../style/font/NanumSquareRoundB.woff') format('woff'),
+    url('../style/font/NanumSquareRoundB.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'NanumSquareRoundEB';
+  src: url('../style/font/NanumSquareRoundEB.woff2') format('woff2'),
+    url('../style/font/NanumSquareRoundEB.woff') format('woff'),
+    url('../style/font/NanumSquareRoundEB.ttf') format('truetype');
+}
+
+body {
+  font-family: NanumSquareRoundR, sans-serif;
+}

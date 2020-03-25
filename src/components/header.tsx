@@ -1,7 +1,5 @@
 import { Link } from 'gatsby';
 import React from 'react';
-import palette from '../style/palette';
-import _ from 'lodash';
 
 type HeaderProps = {
   siteTitle: string;
@@ -27,7 +25,6 @@ const Header = ({ siteTitle }: HeaderProps) => {
             <Link
               to="/"
               style={{
-                color: palette.gray[8],
                 textDecoration: `none`,
               }}
             >

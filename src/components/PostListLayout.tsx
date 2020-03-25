@@ -4,31 +4,20 @@ import { css } from '@emotion/core';
 
 import Header from './header';
 import Category from './Category';
-import 'normalize.css';
-import '../style/common.css';
+import styled from '@emotion/styled';
+import {
+  BodyContainer,
+  LayoutContainer,
+  CategoryContainer,
+  RightContentContainer,
+  ContentContainer,
+} from './CommonStyle';
 
 type PostListLayoutProps = {
   children: ReactNode;
 };
 
-const PostListLayoutWrapStyle = css`
-  display: flex;
-  justify-content: center;
-`;
-
-const CategoryWrapStyle = css`
-  flex-basis: 10%;
-  padding: 0 1.5rem 0 1.5rem;
-`;
-
-const PostListWrapStyle = css`
-  flex-basis: 50%;
-`;
-
-const PostListVoidWrapStyle = css`
-  flex-basis: 10%;
-  padding: 0 1.5rem 0 1.5rem;
-`;
+const PostListVoidWrapStyle = styled(RightContentContainer)``;
 
 const PostListLayout = ({ children }: PostListLayoutProps) => {
   const data = useStaticQuery(graphql`
@@ -42,18 +31,18 @@ const PostListLayout = ({ children }: PostListLayoutProps) => {
   `);
 
   return (
-    <>
+    <LayoutContainer>
       <Header siteTitle={data.site.siteMetadata.title} />
-      <div css={PostListLayoutWrapStyle}>
-        <div css={CategoryWrapStyle}>
+      <BodyContainer>
+        <CategoryContainer>
           <Category />
-        </div>
-        <div css={PostListWrapStyle}>
+        </CategoryContainer>
+        <ContentContainer>
           <main>{children}</main>
-        </div>
-        <div css={PostListVoidWrapStyle}></div>
-      </div>
-    </>
+        </ContentContainer>
+        <PostListVoidWrapStyle></PostListVoidWrapStyle>
+      </BodyContainer>
+    </LayoutContainer>
   );
 };
 

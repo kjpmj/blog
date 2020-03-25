@@ -5,29 +5,22 @@ import { css } from '@emotion/core';
 import Header from './header';
 import Category from './Category';
 import { MarkdownHeading } from '../../types/graphql-types';
-import 'normalize.css';
-import '../style/common.css';
+import styled from '@emotion/styled';
+import {
+  LayoutContainer,
+  ContentContainer,
+  BodyContainer,
+  CategoryContainer,
+  RightContentContainer,
+} from './CommonStyle';
+import palette from '../style/palette';
 
 type PostLayoutProps = {
   children: ReactNode;
   headings: MarkdownHeading[];
 };
 
-const PostLayoutWrapStyle = css`
-  display: flex;
-  justify-content: center;
-`;
-
-const CategoryWrapStyle = css`
-  flex-basis: 10%;
-  padding: 0 1.5rem 0 1.5rem;
-`;
-
-const PostWrapStyle = css`
-  flex-basis: 50%;
-`;
-
-const PostIndexWrapStyle = css`
+const PostIndexWrapStyle = styled(RightContentContainer)`
   flex-basis: 10%;
   padding: 0 1.5rem 0 1.5rem;
 
@@ -36,7 +29,7 @@ const PostIndexWrapStyle = css`
   justify-content: flex-start;
 
   > div + div {
-    border-top: 1px solid black;
+    /* border-top: 1px dotted black; */
   }
 
   > div {
@@ -44,7 +37,15 @@ const PostIndexWrapStyle = css`
   }
 
   a {
+    display: block;
     text-decoration: none;
+    color: ${palette.gray[6]};
+
+    &:hover {
+      transform: scale(1.075);
+      transform-origin: 0 100%;
+      color: ${palette.main()[5]};
+    }
   }
 `;
 
@@ -60,16 +61,16 @@ const PostLayout = ({ children, headings }: PostLayoutProps) => {
   `);
 
   return (
-    <>
+    <LayoutContainer>
       <Header siteTitle={data.site.siteMetadata.title} />
-      <div css={PostLayoutWrapStyle}>
-        <div css={CategoryWrapStyle}>
+      <BodyContainer>
+        <CategoryContainer>
           <Category />
-        </div>
-        <div css={PostWrapStyle}>
+        </CategoryContainer>
+        <ContentContainer>
           <main>{children}</main>
-        </div>
-        <div css={PostIndexWrapStyle}>
+        </ContentContainer>
+        <PostIndexWrapStyle>
           {headings &&
             headings.map(heading => {
               const value: string = heading.value.replace(/\s/g, '-');
@@ -80,9 +81,9 @@ const PostLayout = ({ children, headings }: PostLayoutProps) => {
                 </div>
               );
             })}
-        </div>
-      </div>
-    </>
+        </PostIndexWrapStyle>
+      </BodyContainer>
+    </LayoutContainer>
   );
 };
 

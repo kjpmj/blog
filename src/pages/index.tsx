@@ -4,6 +4,8 @@ import { Query } from '../../types/graphql-types';
 
 import PostListLayout from '../components/PostListLayout';
 import SEO from '../components/seo';
+import './index.css';
+import 'normalize.css';
 
 const IndexPage: React.FC = () => {
   const LatestPostListQuery = graphql`
