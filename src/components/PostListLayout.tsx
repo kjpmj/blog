@@ -4,6 +4,8 @@ import { css } from '@emotion/core';
 
 import Header from './header';
 import Category from './Category';
+import 'normalize.css';
+import '../style/common.css';
 
 type PostListLayoutProps = {
   children: ReactNode;

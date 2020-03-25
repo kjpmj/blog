@@ -5,6 +5,8 @@ import { css } from '@emotion/core';
 import Header from './header';
 import Category from './Category';
 import { MarkdownHeading } from '../../types/graphql-types';
+import 'normalize.css';
+import '../style/common.css';
 
 type PostLayoutProps = {
   children: ReactNode;
@@ -36,6 +38,14 @@ const PostIndexWrapStyle = css`
   > div + div {
     border-top: 1px solid black;
   }
+
+  > div {
+    padding: 0.4rem 0 0.4rem 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 const PostLayout = ({ children, headings }: PostLayoutProps) => {
@@ -60,11 +70,15 @@ const PostLayout = ({ children, headings }: PostLayoutProps) => {
           <main>{children}</main>
         </div>
         <div css={PostIndexWrapStyle}>
-          {headings.map(heading => (
-            <div key={heading.value}>
-              <a href={`#${heading.value}`}>{heading.value}</a>
-            </div>
-          ))}
+          {headings.map(heading => {
+            const value: string = heading.value.replace(/\s/g, '-');
+
+            return (
+              <div key={heading.value}>
+                <a href={`#${value}`}>{heading.value}</a>
+              </div>
+            );
+          })}
         </div>
       </div>
     </>
