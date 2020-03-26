@@ -42,7 +42,9 @@ const IndexPage: React.FC = () => {
         {allFile.edges.map(({ node }) => (
           <li key={node.id}>
             <h2>
-              <Link to={`/${node.childMarkdownRemark.frontmatter.title}`}>
+              <Link
+                to={`/${node.relativeDirectory}/${node.childMarkdownRemark.frontmatter.title}`}
+              >
                 {node.childMarkdownRemark.frontmatter.title}
               </Link>
             </h2>

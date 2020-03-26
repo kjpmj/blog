@@ -1,41 +1,27 @@
-import { CreatePagesArgs } from 'gatsby';
-import path from 'path';
-import { Query } from '../../types/graphql-types';
+import { CreatePagesArgs, Actions } from 'gatsby';
+import { createPostLayout } from './createPostLayout';
+import { createPostListLayout } from './createPostListLayout';
+
+export type createPagesType = {
+  actions: Actions;
+  graphql: <TData, TVariables = any>(
+    query: string,
+    variables?: TVariables,
+  ) => Promise<{
+    errors?: any;
+    data?: TData;
+  }>;
+};
 
 export async function createPages({ actions, graphql }: CreatePagesArgs) {
-  const { createPage } = actions;
+  const params = {
+    actions,
+    graphql,
+  };
 
-  const { data, errors } = await graphql<Query>(`
-    {
-      allMarkdownRemark {
-        edges {
-          node {
-            frontmatter {
-              title
-            }
-            html
-            headings(depth: h2) {
-              value
-            }
-          }
-        }
-      }
-    }
-  `);
+  // 포스트 레이아웃 페이지
+  createPostLayout(params);
 
-  if (errors) {
-    throw errors;
-  }
-
-  data.allMarkdownRemark.edges.forEach(({ node }) => {
-    createPage({
-      path: node.frontmatter.title,
-      context: {
-        html: node.html,
-        title: node.frontmatter.title,
-        headings: node.headings,
-      },
-      component: path.resolve(__dirname, '../templates/PostTemplate.tsx'),
-    });
-  });
+  // 포스트 리스트 레이아웃 페이지
+  createPostListLayout(params);
 }

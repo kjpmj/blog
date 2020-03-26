@@ -23,26 +23,6 @@ export const CategoryContainer = styled.div`
 
 export const ContentContainer = styled.div`
   flex-basis: 50%;
-
-  h2 {
-    color: ${palette.main()[6]};
-  }
-
-  hr {
-    border: 0.5px solid ${palette.gray[5]};
-  }
-
-  a {
-    font-style: italic;
-    color: ${palette.gray[6]};
-    display: block;
-
-    &:hover {
-      transform: scale(1.075);
-      transform-origin: 0 100%;
-      color: ${palette.main()[5]};
-    }
-  }
 `;
 
 export const RightContentContainer = styled.div`

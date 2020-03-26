@@ -1,20 +1,20 @@
 import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import { useStaticQuery, graphql, Link } from 'gatsby';
 import { Query } from '../../types/graphql-types';
 import styled from '@emotion/styled';
 import _ from 'lodash';
-import palette from '../style/palette';
 
 const CategoryWrapper = styled.div`
   position: fixed;
   max-width: 10%;
-  top: 18.5%;
+  top: 10rem;
 `;
 
 const CategoryTitle = styled.div`
   font-family: NanumSquareRoundEB, sans-serif;
   font-size: 2rem;
   padding-bottom: 1rem;
+  word-break: break-all;
 `;
 
 const CategoryLinkWrapper = styled.div`
@@ -31,7 +31,7 @@ const CategoryLinkWrapper = styled.div`
 
 function Category() {
   const data = useStaticQuery<Query>(graphql`
-    query {
+    {
       allFile(filter: { extension: { eq: "md" } }) {
         nodes {
           relativeDirectory
@@ -54,9 +54,9 @@ function Category() {
       <div>
         {dirKeys.map(dir => (
           <CategoryLinkWrapper key={dir}>
-            <a href={dir}>
+            <Link to={`/${dir}`}>
               {dir} ({dirObj[dir].length})
-            </a>
+            </Link>
           </CategoryLinkWrapper>
         ))}
       </div>

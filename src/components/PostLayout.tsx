@@ -19,6 +19,28 @@ type PostLayoutProps = {
   headings: MarkdownHeading[];
 };
 
+const PostContentWarpper = styled(ContentContainer)`
+  h2 {
+    color: ${palette.main()[6]};
+  }
+
+  hr {
+    border: 0.5px solid ${palette.gray[5]};
+  }
+
+  a {
+    font-style: italic;
+    color: ${palette.gray[6]};
+    display: block;
+
+    &:hover {
+      transform: scale(1.075);
+      transform-origin: 0 100%;
+      color: ${palette.main()[5]};
+    }
+  }
+`;
+
 const PostIndexWrapper = styled(RightContentContainer)`
   display: flex;
   flex-direction: column;
@@ -27,7 +49,7 @@ const PostIndexWrapper = styled(RightContentContainer)`
   > div {
     position: fixed;
     max-width: 10%;
-    top: 18.5%;
+    top: 10rem;
 
     > div > div {
       padding: 0.3rem 0 0.3rem 0;
@@ -52,6 +74,7 @@ const SubTitle = styled.div`
   font-family: NanumSquareRoundEB, sans-serif;
   font-size: 1.618rem;
   padding-bottom: 1rem;
+  word-break: break-all;
 `;
 
 const PostLayout = ({ children, headings }: PostLayoutProps) => {
@@ -72,9 +95,9 @@ const PostLayout = ({ children, headings }: PostLayoutProps) => {
         <CategoryContainer>
           <Category />
         </CategoryContainer>
-        <ContentContainer>
+        <PostContentWarpper>
           <main>{children}</main>
-        </ContentContainer>
+        </PostContentWarpper>
         <PostIndexWrapper>
           <div>
             <SubTitle>Sub Title</SubTitle>

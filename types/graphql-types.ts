@@ -1516,6 +1516,7 @@ export type MarkdownRemarkFrontmatter = {
   path?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Date']>;
   category?: Maybe<Scalars['String']>;
+  mainImage?: Maybe<Scalars['JSON']>;
 };
 
 export type MarkdownRemarkFrontmatterDateArgs = {
