@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
-import { css } from '@emotion/core';
 
 import Header from './header';
 import Category from './Category';

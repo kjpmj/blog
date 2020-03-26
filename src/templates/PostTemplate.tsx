@@ -14,7 +14,7 @@ const PostTemplate: React.FC<IPostTemplatePorps> = React.memo(props => {
 
   return (
     <PostLayout headings={headings}>
-      <h2>{title}</h2>
+      <h1>{title}</h1>
       <hr />
       <div dangerouslySetInnerHTML={{ __html: html }}></div>
     </PostLayout>

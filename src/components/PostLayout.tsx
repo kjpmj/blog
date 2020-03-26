@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
-import { css } from '@emotion/core';
 
 import Header from './header';
 import Category from './Category';
@@ -20,26 +19,26 @@ type PostLayoutProps = {
   headings: MarkdownHeading[];
 };
 
-const PostIndexWrapStyle = styled(RightContentContainer)`
-  flex-basis: 10%;
-  padding: 0 1.5rem 0 1.5rem;
-
+const PostIndexWrapper = styled(RightContentContainer)`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 
-  > div + div {
-    /* border-top: 1px dotted black; */
-  }
-
   > div {
-    padding: 0.4rem 0 0.4rem 0;
+    position: fixed;
+    max-width: 10%;
+    top: 18.5%;
+
+    > div > div {
+      padding: 0.3rem 0 0.3rem 0;
+    }
   }
 
   a {
     display: block;
     text-decoration: none;
     color: ${palette.gray[6]};
+    word-break: break-all;
 
     &:hover {
       transform: scale(1.075);
@@ -47,6 +46,12 @@ const PostIndexWrapStyle = styled(RightContentContainer)`
       color: ${palette.main()[5]};
     }
   }
+`;
+
+const SubTitle = styled.div`
+  font-family: NanumSquareRoundEB, sans-serif;
+  font-size: 1.618rem;
+  padding-bottom: 1rem;
 `;
 
 const PostLayout = ({ children, headings }: PostLayoutProps) => {
@@ -70,18 +75,23 @@ const PostLayout = ({ children, headings }: PostLayoutProps) => {
         <ContentContainer>
           <main>{children}</main>
         </ContentContainer>
-        <PostIndexWrapStyle>
-          {headings &&
-            headings.map(heading => {
-              const value: string = heading.value.replace(/\s/g, '-');
+        <PostIndexWrapper>
+          <div>
+            <SubTitle>Sub Title</SubTitle>
+            <div>
+              {headings &&
+                headings.map(heading => {
+                  const value: string = heading.value.replace(/\s/g, '-');
 
-              return (
-                <div key={heading.value}>
-                  <a href={`#${value}`}>{heading.value}</a>
-                </div>
-              );
-            })}
-        </PostIndexWrapStyle>
+                  return (
+                    <div key={heading.value}>
+                      <a href={`#${value}`}>{heading.value}</a>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </PostIndexWrapper>
       </BodyContainer>
     </LayoutContainer>
   );

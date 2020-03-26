@@ -1,15 +1,32 @@
 import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Query } from '../../types/graphql-types';
-import { css } from '@emotion/core';
+import styled from '@emotion/styled';
 import _ from 'lodash';
+import palette from '../style/palette';
 
-const categoryWrapStyle = css`
-  /* position: fixed; */
+const CategoryWrapper = styled.div`
+  position: fixed;
+  max-width: 10%;
+  top: 18.5%;
+`;
 
-  /* @media (max-width: 1200px) {
-    display: none;
-  } */
+const CategoryTitle = styled.div`
+  font-family: NanumSquareRoundEB, sans-serif;
+  font-size: 2rem;
+  padding-bottom: 1rem;
+`;
+
+const CategoryLinkWrapper = styled.div`
+  padding: 0.3rem 0 0.3rem 0;
+
+  a {
+    font-size: 1.1rem;
+    word-break: break-all;
+    &:hover {
+      font-family: NanumSquareRoundB, sans-serif;
+    }
+  }
 `;
 
 function Category() {
@@ -32,16 +49,18 @@ function Category() {
   const dirKeys: string[] = _.keys(dirObj);
 
   return (
-    <div css={categoryWrapStyle}>
-      <h2>Category</h2>
+    <CategoryWrapper>
+      <CategoryTitle>Category</CategoryTitle>
       <div>
         {dirKeys.map(dir => (
-          <div key={dir}>
-            {dir}({dirObj[dir].length})
-          </div>
+          <CategoryLinkWrapper key={dir}>
+            <a href={dir}>
+              {dir} ({dirObj[dir].length})
+            </a>
+          </CategoryLinkWrapper>
         ))}
       </div>
-    </div>
+    </CategoryWrapper>
   );
 }
 
