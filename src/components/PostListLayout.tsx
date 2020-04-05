@@ -14,11 +14,12 @@ import {
 
 type PostListLayoutProps = {
   children: ReactNode;
+  path: string;
 };
 
 const PostListVoidWrapStyle = styled(RightContentContainer)``;
 
-const PostListLayout = ({ children }: PostListLayoutProps) => {
+const PostListLayout = ({ children, path }: PostListLayoutProps) => {
   const data = useStaticQuery(graphql`
     query {
       site {
@@ -34,7 +35,7 @@ const PostListLayout = ({ children }: PostListLayoutProps) => {
       <Header siteTitle={data.site.siteMetadata.title} />
       <BodyContainer>
         <CategoryContainer>
-          <Category />
+          <Category path={path} />
         </CategoryContainer>
         <ContentContainer>
           <main>{children}</main>

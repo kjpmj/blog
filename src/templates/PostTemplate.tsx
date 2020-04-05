@@ -13,10 +13,10 @@ const PostTemplate: React.FC<IPostTemplateProps> = React.memo(props => {
   const { title, html, headings } = props.pageContext;
 
   return (
-    <PostLayout headings={headings}>
+    <PostLayout headings={headings} path={props.path}>
       <h1>{title}</h1>
       <hr />
-      <div dangerouslySetInnerHTML={{ __html: html }}></div>
+      <div dangerouslySetInnerHTML={{ __html: html }} id="post-block"></div>
     </PostLayout>
   );
 });

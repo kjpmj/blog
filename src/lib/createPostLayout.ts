@@ -13,8 +13,9 @@ export async function createPostLayout({ actions, graphql }: createPagesType) {
             frontmatter {
               title
             }
-            headings(depth: h2) {
+            headings {
               value
+              depth
             }
             html
           }

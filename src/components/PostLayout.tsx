@@ -10,18 +10,20 @@ import {
   ContentContainer,
   BodyContainer,
   CategoryContainer,
-  RightContentContainer,
 } from './CommonStyle';
 import palette from '../style/palette';
+import SubTitle from './SubTitle';
 
 type PostLayoutProps = {
   children: ReactNode;
   headings: MarkdownHeading[];
+  path: string;
 };
 
 const PostContentWarpper = styled(ContentContainer)`
-  h2 {
-    color: ${palette.main()[6]};
+  font-size: 1.125rem;
+  main > h1:first-of-type {
+    color: ${palette.main()[5]};
   }
 
   hr {
@@ -41,43 +43,7 @@ const PostContentWarpper = styled(ContentContainer)`
   }
 `;
 
-const PostIndexWrapper = styled(RightContentContainer)`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-
-  > div {
-    position: fixed;
-    max-width: 10%;
-    top: 10rem;
-
-    > div > div {
-      padding: 0.3rem 0 0.3rem 0;
-    }
-  }
-
-  a {
-    display: block;
-    text-decoration: none;
-    color: ${palette.gray[6]};
-    word-break: break-all;
-
-    &:hover {
-      transform: scale(1.075);
-      transform-origin: 0 100%;
-      color: ${palette.main()[5]};
-    }
-  }
-`;
-
-const SubTitle = styled.div`
-  font-family: NanumSquareRoundEB, sans-serif;
-  font-size: 1.618rem;
-  padding-bottom: 1rem;
-  word-break: break-all;
-`;
-
-const PostLayout = ({ children, headings }: PostLayoutProps) => {
+const PostLayout = ({ children, headings, path }: PostLayoutProps) => {
   const data = useStaticQuery(graphql`
     query {
       site {
@@ -93,28 +59,12 @@ const PostLayout = ({ children, headings }: PostLayoutProps) => {
       <Header siteTitle={data.site.siteMetadata.title} />
       <BodyContainer>
         <CategoryContainer>
-          <Category />
+          <Category path={path} />
         </CategoryContainer>
         <PostContentWarpper>
           <main>{children}</main>
         </PostContentWarpper>
-        <PostIndexWrapper>
-          <div>
-            <SubTitle>Sub Title</SubTitle>
-            <div>
-              {headings &&
-                headings.map(heading => {
-                  const value: string = heading.value.replace(/\s/g, '-');
-
-                  return (
-                    <div key={heading.value}>
-                      <a href={`#${value}`}>{heading.value}</a>
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-        </PostIndexWrapper>
+        <SubTitle headings={headings} />
       </BodyContainer>
     </LayoutContainer>
   );

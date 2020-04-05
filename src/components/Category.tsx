@@ -3,6 +3,8 @@ import { useStaticQuery, graphql, Link } from 'gatsby';
 import { Query } from '../../types/graphql-types';
 import styled from '@emotion/styled';
 import _ from 'lodash';
+import palette from '../style/palette';
+import { css } from '@emotion/core';
 
 const CategoryWrapper = styled.div`
   position: fixed;
@@ -23,13 +25,28 @@ const CategoryLinkWrapper = styled.div`
   a {
     font-size: 1.1rem;
     word-break: break-all;
+    display: block;
+
     &:hover {
-      font-family: NanumSquareRoundB, sans-serif;
+      transform: scale(1.075);
+      transform-origin: 0 100%;
+      color: ${palette.main()[5]};
     }
   }
 `;
 
-function Category() {
+const CurrentCategoryStyle = css`
+  a {
+    font-family: 'NanumSquareRoundB';
+    color: ${palette.main()[5]};
+  }
+`;
+
+type CategoryProps = {
+  path: string;
+};
+
+function Category({ path }: CategoryProps) {
   const data = useStaticQuery<Query>(graphql`
     {
       allFile(filter: { extension: { eq: "md" } }) {
@@ -48,12 +65,17 @@ function Category() {
   const dirObj: Object = _.groupBy(dirList);
   const dirKeys: string[] = _.keys(dirObj);
 
+  const categoryPath: string = decodeURI(path).split('/')[1];
+
   return (
     <CategoryWrapper>
       <CategoryTitle>Category</CategoryTitle>
       <div>
         {dirKeys.map(dir => (
-          <CategoryLinkWrapper key={dir}>
+          <CategoryLinkWrapper
+            key={dir}
+            css={categoryPath === dir ? CurrentCategoryStyle : ''}
+          >
             <Link to={`/${dir}`}>
               {dir} ({dirObj[dir].length})
             </Link>

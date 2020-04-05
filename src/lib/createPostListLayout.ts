@@ -26,6 +26,7 @@ export async function createPostListLayout({
                 }
               }
             }
+            excerpt(pruneLength: 200)
           }
           relativeDirectory
         }
@@ -42,6 +43,7 @@ export async function createPostListLayout({
         childMarkdownRemark.frontmatter.mainImage &&
         childMarkdownRemark.frontmatter.mainImage.childImageSharp.fluid.src,
       relativeDirectory,
+      html: childMarkdownRemark.excerpt,
     }),
   );
 

@@ -35,7 +35,7 @@ const IndexPage: React.FC = () => {
   const { allFile } = useStaticQuery<Query>(LatestPostListQuery);
 
   return (
-    <PostListLayout>
+    <PostListLayout path="/">
       <SEO title="Home" />
       <h2>최근 작성한 게시글 목록</h2>
       <ul>
