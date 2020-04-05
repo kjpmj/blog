@@ -28,7 +28,7 @@ const CategoryLinkWrapper = styled.div`
     display: block;
 
     &:hover {
-      transform: scale(1.075);
+      transform: scale(1.1);
       transform-origin: 0 100%;
       color: ${palette.main()[5]};
     }
@@ -39,6 +39,8 @@ const CurrentCategoryStyle = css`
   a {
     font-family: 'NanumSquareRoundB';
     color: ${palette.main()[5]};
+    transform: scale(1.1);
+    transform-origin: 0 100%;
   }
 `;
 

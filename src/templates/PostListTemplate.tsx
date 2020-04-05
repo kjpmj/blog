@@ -12,6 +12,7 @@ type IPostListTemplateProps = ITemplateProps<{
     relativeDirectory: string;
     mainImage: string;
     html: string;
+    birthTime: string;
   }>;
 }>;
 
@@ -31,13 +32,17 @@ const PostRowWrapper = styled.div`
 
   &:hover {
     > div:first-of-type {
-      color: ${palette.main()[5]};
+      > div:nth-of-type(2) {
+        color: ${palette.main()[5]};
+      }
     }
   }
 `;
 
-const MainImageWrapper = styled.div`
+const mainImageWrapper = css`
   height: 100%;
+  width: 20%;
+  text-align: right;
   img {
     height: 100%;
   }
@@ -46,14 +51,33 @@ const MainImageWrapper = styled.div`
 const titleStyle = css`
   font-size: 2rem;
   font-family: NanumSquareRoundB, sans-serif;
+  margin-bottom: 1rem;
 `;
 
 const postRowColWrpper = css`
+  width: 80%;
   display: flex;
   flex-direction: column;
+`;
 
-  div + div {
-    padding-top: 1rem;
+const categoryStyle = css`
+  > span {
+    color: ${palette.white};
+    background-color: ${palette.violet[4]};
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+  }
+`;
+
+const timeCategoryWrapper = css`
+  display: flex;
+  margin-bottom: 1rem;
+`;
+
+const timeStyle = css`
+  > span {
+    color: ${palette.white};
+    background-color: ${palette.teal[4]};
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
   }
 `;
 
@@ -63,23 +87,33 @@ function PostListTemplate(props: IPostListTemplateProps) {
   return (
     <PostListLayout path={props.path}>
       <PostRowListWrapper>
-        {postDataList.map(({ title, relativeDirectory, mainImage, html }) => {
-          return (
-            <Link key={title} to={`/${relativeDirectory}/${title}`}>
-              <PostRowWrapper>
-                <div css={postRowColWrpper}>
-                  <div css={titleStyle}>{title}</div>
-                  <div>{html}</div>
-                </div>
-                {mainImage && (
-                  <MainImageWrapper>
-                    <img src={mainImage}></img>
-                  </MainImageWrapper>
-                )}
-              </PostRowWrapper>
-            </Link>
-          );
-        })}
+        {postDataList.map(
+          ({ title, relativeDirectory, mainImage, html, birthTime }) => {
+            return (
+              <Link key={title} to={`/${relativeDirectory}/${title}`}>
+                <PostRowWrapper>
+                  <div css={postRowColWrpper}>
+                    <div css={timeCategoryWrapper}>
+                      <div css={timeStyle}>
+                        <span>{birthTime}</span>
+                      </div>
+                      <div css={categoryStyle}>
+                        <span>{relativeDirectory}</span>
+                      </div>
+                    </div>
+                    <div css={titleStyle}>{title}</div>
+                    <div>{html}</div>
+                  </div>
+                  {mainImage && (
+                    <div css={mainImageWrapper}>
+                      <img src={mainImage}></img>
+                    </div>
+                  )}
+                </PostRowWrapper>
+              </Link>
+            );
+          },
+        )}
       </PostRowListWrapper>
     </PostListLayout>
   );

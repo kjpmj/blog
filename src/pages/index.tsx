@@ -3,30 +3,100 @@ import { Link, graphql, useStaticQuery } from 'gatsby';
 import { Query } from '../../types/graphql-types';
 
 import PostListLayout from '../components/PostListLayout';
-import SEO from '../components/seo';
 import './index.css';
 import 'normalize.css';
+import palette from '../style/palette';
+import styled from '@emotion/styled';
+import { css } from '@emotion/core';
+
+const PostRowListWrapper = styled.div`
+  > a {
+    display: block;
+    padding: 1rem 0.25rem 1rem 0.25rem;
+    border-bottom: 1px solid ${palette.gray[5]};
+  }
+`;
+
+const PostRowWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  height: 10rem;
+
+  &:hover {
+    > div:first-of-type {
+      > div:nth-of-type(2) {
+        color: ${palette.main()[5]};
+      }
+    }
+  }
+`;
+
+const mainImageWrapper = css`
+  height: 100%;
+  width: 20%;
+  text-align: right;
+  img {
+    height: 100%;
+  }
+`;
+
+const titleStyle = css`
+  font-size: 2rem;
+  font-family: NanumSquareRoundB, sans-serif;
+  margin-bottom: 1rem;
+`;
+
+const postRowColWrpper = css`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const categoryStyle = css`
+  > span {
+    color: ${palette.white};
+    background-color: ${palette.violet[4]};
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+  }
+`;
+
+const timeCategoryWrapper = css`
+  display: flex;
+  margin-bottom: 1rem;
+`;
+
+const timeStyle = css`
+  > span {
+    color: ${palette.white};
+    background-color: ${palette.teal[4]};
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+  }
+`;
 
 const IndexPage: React.FC = () => {
   const LatestPostListQuery = graphql`
     {
       allFile(
         filter: { extension: { eq: "md" } }
-        sort: { fields: birthTime, order: DESC }
+        sort: { order: DESC, fields: birthTime }
       ) {
-        edges {
-          node {
-            name
-            relativeDirectory
-            base
-            childMarkdownRemark {
-              excerpt(truncate: false, pruneLength: 100)
-              frontmatter {
-                title
+        nodes {
+          childMarkdownRemark {
+            frontmatter {
+              title
+              mainImage {
+                childImageSharp {
+                  fluid {
+                    src
+                  }
+                }
               }
             }
-            birthTime(fromNow: true, locale: "ko")
+            excerpt(pruneLength: 200)
           }
+          relativeDirectory
+          birthTime(formatString: "DD MMMM, YYYY")
         }
       }
     }
@@ -36,23 +106,41 @@ const IndexPage: React.FC = () => {
 
   return (
     <PostListLayout path="/">
-      <SEO title="Home" />
-      <h2>최근 작성한 게시글 목록</h2>
-      <ul>
-        {allFile.edges.map(({ node }) => (
-          <li key={node.id}>
-            <h2>
-              <Link
-                to={`/${node.relativeDirectory}/${node.childMarkdownRemark.frontmatter.title}`}
-              >
-                {node.childMarkdownRemark.frontmatter.title}
+      <PostRowListWrapper>
+        {allFile.nodes.map(
+          ({ childMarkdownRemark, relativeDirectory, birthTime }) => {
+            const title = childMarkdownRemark.frontmatter.title;
+            const html = childMarkdownRemark.excerpt;
+            const mainImage =
+              childMarkdownRemark.frontmatter.mainImage &&
+              childMarkdownRemark.frontmatter.mainImage.childImageSharp.fluid
+                .src;
+            return (
+              <Link key={title} to={`/${relativeDirectory}/${title}`}>
+                <PostRowWrapper>
+                  <div css={postRowColWrpper}>
+                    <div css={timeCategoryWrapper}>
+                      <div css={timeStyle}>
+                        <span>{birthTime}</span>
+                      </div>
+                      <div css={categoryStyle}>
+                        <span>{relativeDirectory}</span>
+                      </div>
+                    </div>
+                    <div css={titleStyle}>{title}</div>
+                    <div>{html}</div>
+                  </div>
+                  {mainImage && (
+                    <div css={mainImageWrapper}>
+                      <img src={mainImage}></img>
+                    </div>
+                  )}
+                </PostRowWrapper>
               </Link>
-            </h2>
-            <h4>{node.birthTime}</h4>
-            <p>{node.childMarkdownRemark.excerpt}</p>
-          </li>
-        ))}
-      </ul>
+            );
+          },
+        )}
+      </PostRowListWrapper>
     </PostListLayout>
   );
 };

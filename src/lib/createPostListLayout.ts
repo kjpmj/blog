@@ -29,6 +29,7 @@ export async function createPostListLayout({
             excerpt(pruneLength: 200)
           }
           relativeDirectory
+          birthTime(formatString: "DD MMMM, YYYY")
         }
       }
     }
@@ -37,13 +38,14 @@ export async function createPostListLayout({
   const { allFile } = data;
 
   const postList: Object[] = allFile.nodes.map(
-    ({ childMarkdownRemark, relativeDirectory }) => ({
+    ({ childMarkdownRemark, relativeDirectory, birthTime }) => ({
       title: childMarkdownRemark.frontmatter.title,
       mainImage:
         childMarkdownRemark.frontmatter.mainImage &&
         childMarkdownRemark.frontmatter.mainImage.childImageSharp.fluid.src,
       relativeDirectory,
       html: childMarkdownRemark.excerpt,
+      birthTime,
     }),
   );
 

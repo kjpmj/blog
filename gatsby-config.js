@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: `까먹기 전에 써놓자`,
-    description: `까먹기 전에 써놓는 블로그.`,
+    title: `까먹기 전에 적자`,
+    description: `까먹기 전에 적는 낙서장.`,
     author: `@kjpmj`,
   },
   plugins: [
