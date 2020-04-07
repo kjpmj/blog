@@ -12,7 +12,10 @@ export async function createPostListLayout({
     {
       allFile(
         filter: { extension: { eq: "md" } }
-        sort: { order: DESC, fields: birthTime }
+        sort: {
+          order: DESC
+          fields: childMarkdownRemark___frontmatter___createAt
+        }
       ) {
         nodes {
           childMarkdownRemark {
@@ -25,11 +28,11 @@ export async function createPostListLayout({
                   }
                 }
               }
+              createAt(formatString: "DD MMMM, YYYY")
             }
             excerpt(pruneLength: 200)
           }
           relativeDirectory
-          birthTime(formatString: "DD MMMM, YYYY")
         }
       }
     }
@@ -38,14 +41,14 @@ export async function createPostListLayout({
   const { allFile } = data;
 
   const postList: Object[] = allFile.nodes.map(
-    ({ childMarkdownRemark, relativeDirectory, birthTime }) => ({
+    ({ childMarkdownRemark, relativeDirectory }) => ({
       title: childMarkdownRemark.frontmatter.title,
       mainImage:
         childMarkdownRemark.frontmatter.mainImage &&
         childMarkdownRemark.frontmatter.mainImage.childImageSharp.fluid.src,
       relativeDirectory,
       html: childMarkdownRemark.excerpt,
-      birthTime,
+      createAt: childMarkdownRemark.frontmatter.createAt,
     }),
   );
 

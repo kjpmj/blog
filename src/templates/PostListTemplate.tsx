@@ -12,7 +12,7 @@ type IPostListTemplateProps = ITemplateProps<{
     relativeDirectory: string;
     mainImage: string;
     html: string;
-    birthTime: string;
+    createAt: string;
   }>;
 }>;
 
@@ -88,14 +88,14 @@ function PostListTemplate(props: IPostListTemplateProps) {
     <PostListLayout path={props.path}>
       <PostRowListWrapper>
         {postDataList.map(
-          ({ title, relativeDirectory, mainImage, html, birthTime }) => {
+          ({ title, relativeDirectory, mainImage, html, createAt }) => {
             return (
               <Link key={title} to={`/${relativeDirectory}/${title}`}>
                 <PostRowWrapper>
                   <div css={postRowColWrpper}>
                     <div css={timeCategoryWrapper}>
                       <div css={timeStyle}>
-                        <span>{birthTime}</span>
+                        <span>{createAt}</span>
                       </div>
                       <div css={categoryStyle}>
                         <span>{relativeDirectory}</span>

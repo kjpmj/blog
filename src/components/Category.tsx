@@ -65,7 +65,7 @@ function Category({ path }: CategoryProps) {
     ({ relativeDirectory }) => relativeDirectory,
   );
   const dirObj: Object = _.groupBy(dirList);
-  const dirKeys: string[] = _.keys(dirObj);
+  const dirKeys: string[] = _.keys(dirObj).sort();
 
   const categoryPath: string = decodeURI(path).split('/')[1];
 

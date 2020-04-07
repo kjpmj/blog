@@ -33,11 +33,17 @@ const PostRowWrapper = styled.div`
 `;
 
 const mainImageWrapper = css`
-  height: 100%;
-  width: 20%;
+  height: 10rem;
+  width: 10rem;
   text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   img {
-    height: 100%;
+    width: 90%;
+    height: 90%;
   }
 `;
 
@@ -79,7 +85,10 @@ const IndexPage: React.FC = () => {
     {
       allFile(
         filter: { extension: { eq: "md" } }
-        sort: { order: DESC, fields: birthTime }
+        sort: {
+          order: DESC
+          fields: childMarkdownRemark___frontmatter___createAt
+        }
       ) {
         nodes {
           childMarkdownRemark {
@@ -92,11 +101,11 @@ const IndexPage: React.FC = () => {
                   }
                 }
               }
+              createAt(formatString: "DD MMMM, YYYY")
             }
             excerpt(pruneLength: 200)
           }
           relativeDirectory
-          birthTime(formatString: "DD MMMM, YYYY")
         }
       }
     }
@@ -107,39 +116,38 @@ const IndexPage: React.FC = () => {
   return (
     <PostListLayout path="/">
       <PostRowListWrapper>
-        {allFile.nodes.map(
-          ({ childMarkdownRemark, relativeDirectory, birthTime }) => {
-            const title = childMarkdownRemark.frontmatter.title;
-            const html = childMarkdownRemark.excerpt;
-            const mainImage =
-              childMarkdownRemark.frontmatter.mainImage &&
-              childMarkdownRemark.frontmatter.mainImage.childImageSharp.fluid
-                .src;
-            return (
-              <Link key={title} to={`/${relativeDirectory}/${title}`}>
-                <PostRowWrapper>
-                  <div css={postRowColWrpper}>
-                    <div css={timeCategoryWrapper}>
-                      <div css={timeStyle}>
-                        <span>{birthTime}</span>
-                      </div>
-                      <div css={categoryStyle}>
-                        <span>{relativeDirectory}</span>
-                      </div>
+        {allFile.nodes.map(({ childMarkdownRemark, relativeDirectory }) => {
+          const title = childMarkdownRemark.frontmatter.title;
+          const html = childMarkdownRemark.excerpt;
+          const mainImage =
+            childMarkdownRemark.frontmatter.mainImage &&
+            childMarkdownRemark.frontmatter.mainImage.childImageSharp.fluid.src;
+          const createAt = childMarkdownRemark.frontmatter.createAt;
+
+          return (
+            <Link key={title} to={`/${relativeDirectory}/${title}`}>
+              <PostRowWrapper>
+                <div css={postRowColWrpper}>
+                  <div css={timeCategoryWrapper}>
+                    <div css={timeStyle}>
+                      <span>{createAt}</span>
                     </div>
-                    <div css={titleStyle}>{title}</div>
-                    <div>{html}</div>
+                    <div css={categoryStyle}>
+                      <span>{relativeDirectory}</span>
+                    </div>
                   </div>
-                  {mainImage && (
-                    <div css={mainImageWrapper}>
-                      <img src={mainImage}></img>
-                    </div>
-                  )}
-                </PostRowWrapper>
-              </Link>
-            );
-          },
-        )}
+                  <div css={titleStyle}>{title}</div>
+                  <div>{html}</div>
+                </div>
+                {mainImage && (
+                  <div css={mainImageWrapper}>
+                    <img src={mainImage}></img>
+                  </div>
+                )}
+              </PostRowWrapper>
+            </Link>
+          );
+        })}
       </PostRowListWrapper>
     </PostListLayout>
   );

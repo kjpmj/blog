@@ -39,19 +39,16 @@ function SubTitle({ headings }: SubTitleProps) {
 
   useEffect(() => {
     const throttle = _.throttle(() => {
-      const hList = document.querySelectorAll(
+      const hList = document.querySelectorAll<HTMLHeadingElement>(
         '#post-block > h1, h2, h3, h4, h5',
       );
 
-      const hArray = Array.from(hList);
+      const hArray = Array.from<HTMLHeadingElement>(hList);
 
-      let curH: HTMLHeadingElement = _.find(
+      const curH = _.find<HTMLHeadingElement>(
         _.reverse(hArray),
-        (h: HTMLHeadingElement) => {
-          return (
-            h.getBoundingClientRect().top - h.getBoundingClientRect().height < 0
-          );
-        },
+        (h: HTMLHeadingElement) =>
+          h.getBoundingClientRect().top - h.getBoundingClientRect().height < 0,
       );
 
       if (curH) {
