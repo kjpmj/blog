@@ -20,8 +20,8 @@ export async function createPages({ actions, graphql }: CreatePagesArgs) {
   };
 
   // 포스트 레이아웃 페이지
-  createPostLayout(params);
+  await createPostLayout(params);
 
   // 포스트 리스트 레이아웃 페이지
-  createPostListLayout(params);
+  await createPostListLayout(params);
 }
