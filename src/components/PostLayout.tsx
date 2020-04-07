@@ -21,7 +21,6 @@ type PostLayoutProps = {
 };
 
 const PostContentWarpper = styled(ContentContainer)`
-  font-size: 1.125rem;
   main > h1:first-of-type {
     color: ${palette.main()[5]};
   }

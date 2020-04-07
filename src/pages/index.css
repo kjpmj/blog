@@ -26,7 +26,31 @@
     url('../style/font/NanumSquareRoundEB.ttf') format('truetype');
 }
 
-body {
+html {
   font-family: NanumSquareRoundR, sans-serif;
   font-size: 16px;
+}
+
+@media only screen and (max-width: 1440px) {
+  html {
+    font-size: 15.5px;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  html {
+    font-size: 14.5px;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  html {
+    font-size: 14px;
+  }
 }

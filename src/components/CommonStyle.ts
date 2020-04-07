@@ -19,13 +19,51 @@ export const BodyContainer = styled.div`
 export const CategoryContainer = styled.div`
   flex-basis: 10%;
   padding: 0 1.5rem 0 1.5rem;
+
+  @media only screen and (max-width: 1440px) {
+    flex-basis: 12%;
+  }
+
+  @media only screen and (max-width: 1200px) {
+    flex-basis: 15%;
+  }
+
+  @media only screen and (max-width: 1024px) {
+    flex-basis: 18%;
+  }
+
+  @media only screen and (max-width: 720px) {
+    flex-basis: 0%;
+    display: none;
+  }
 `;
 
 export const ContentContainer = styled.div`
   flex-basis: 50%;
+
+  @media only screen and (max-width: 1440px) {
+    flex-basis: 60%;
+  }
+
+  @media only screen and (max-width: 1200px) {
+    flex-basis: 70%;
+  }
+
+  @media only screen and (max-width: 1024px) {
+    flex-basis: 80%;
+  }
+
+  @media only screen and (max-width: 720px) {
+    flex-basis: 90%;
+  }
 `;
 
 export const RightContentContainer = styled.div`
   flex-basis: 10%;
   padding: 0 1.5rem 0 1.5rem;
+
+  @media only screen and (max-width: 1370px) {
+    flex-basis: 0%;
+    display: none;
+  }
 `;

@@ -10,6 +10,18 @@ const CategoryWrapper = styled.div`
   position: fixed;
   max-width: 10%;
   top: 10rem;
+
+  @media only screen and (max-width: 1440px) {
+    max-width: 12%;
+  }
+
+  @media only screen and (max-width: 1200px) {
+    max-width: 15%;
+  }
+
+  @media only screen and (max-width: 1024px) {
+    max-width: 18%;
+  }
 `;
 
 const CategoryTitle = styled.div`

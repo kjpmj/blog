@@ -40,7 +40,7 @@ const PostListLayout = ({ children, path }: PostListLayoutProps) => {
         <ContentContainer>
           <main>{children}</main>
         </ContentContainer>
-        <PostListVoidWrapStyle></PostListVoidWrapStyle>
+        <PostListVoidWrapStyle />
       </BodyContainer>
     </LayoutContainer>
   );
