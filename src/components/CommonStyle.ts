@@ -18,7 +18,7 @@ export const BodyContainer = styled.div`
 
 export const CategoryContainer = styled.div`
   flex-basis: 10%;
-  padding: 0 1.5rem 0 1.5rem;
+  padding: 0 2.5rem 0 2.5rem;
 
   @media only screen and (max-width: 1440px) {
     flex-basis: 12%;
@@ -60,7 +60,7 @@ export const ContentContainer = styled.div`
 
 export const RightContentContainer = styled.div`
   flex-basis: 10%;
-  padding: 0 1.5rem 0 1.5rem;
+  padding: 0 2.5rem 0 2.5rem;
 
   @media only screen and (max-width: 1370px) {
     flex-basis: 0%;

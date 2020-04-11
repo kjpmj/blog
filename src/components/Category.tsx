@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useStaticQuery, graphql, Link } from 'gatsby';
 import { Query } from '../../types/graphql-types';
 import styled from '@emotion/styled';
@@ -56,11 +56,65 @@ const CurrentCategoryStyle = css`
   }
 `;
 
+const scroll0Style = css`
+  position: absolute;
+`;
+
+const hiddenStyle = css`
+  visibility: hidden;
+  transition: all 0.2s;
+  animation: fadeout 0.2s;
+
+  @keyframes fadeout {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+`;
+
+const visibleStyle = css`
+  visibility: visible;
+  transition: all 0.2s;
+  animation: fadein 0.2s;
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+`;
+
 type CategoryProps = {
   path: string;
 };
 
 function Category({ path }: CategoryProps) {
+  const [curPosition, setCurPosition] = useState(0);
+  const [display, setDisplay] = useState(true);
+
+  const throttle = _.throttle(() => {
+    if (window.scrollY > curPosition) {
+      setDisplay(false);
+    } else {
+      setDisplay(true);
+    }
+    setCurPosition(window.scrollY);
+  }, 100);
+
+  useEffect(() => {
+    window.addEventListener('scroll', throttle);
+
+    return () => {
+      window.removeEventListener('scroll', throttle);
+    };
+  }, [curPosition]);
+
   const data = useStaticQuery<Query>(graphql`
     {
       allFile(filter: { extension: { eq: "md" } }) {
@@ -82,7 +136,7 @@ function Category({ path }: CategoryProps) {
   const categoryPath: string = decodeURI(path).split('/')[1];
 
   return (
-    <CategoryWrapper>
+    <CategoryWrapper css={display ? visibleStyle : hiddenStyle}>
       <CategoryTitle>Category</CategoryTitle>
       <div>
         {dirKeys.map(dir => (

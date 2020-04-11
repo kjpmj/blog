@@ -37,27 +37,27 @@ const SubTitleStyle = css`
 function SubTitle({ headings }: SubTitleProps) {
   const [curHeading, setCurHeading] = useState('');
 
+  const throttle = _.throttle(() => {
+    const hList = document.querySelectorAll<HTMLHeadingElement>(
+      '#post-block > h1, h2, h3, h4, h5',
+    );
+
+    const hArray = Array.from<HTMLHeadingElement>(hList);
+
+    const curH = _.find<HTMLHeadingElement>(
+      _.reverse(hArray),
+      (h: HTMLHeadingElement) =>
+        h.getBoundingClientRect().top - h.getBoundingClientRect().height < 0,
+    );
+
+    if (curH) {
+      setCurHeading(curH.getAttribute('id'));
+    } else {
+      setCurHeading('');
+    }
+  }, 100);
+
   useEffect(() => {
-    const throttle = _.throttle(() => {
-      const hList = document.querySelectorAll<HTMLHeadingElement>(
-        '#post-block > h1, h2, h3, h4, h5',
-      );
-
-      const hArray = Array.from<HTMLHeadingElement>(hList);
-
-      const curH = _.find<HTMLHeadingElement>(
-        _.reverse(hArray),
-        (h: HTMLHeadingElement) =>
-          h.getBoundingClientRect().top - h.getBoundingClientRect().height < 0,
-      );
-
-      if (curH) {
-        setCurHeading(curH.getAttribute('id'));
-      } else {
-        setCurHeading('');
-      }
-    }, 100);
-
     window.addEventListener('scroll', throttle);
 
     return () => {
