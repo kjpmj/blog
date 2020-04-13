@@ -56,10 +56,6 @@ const CurrentCategoryStyle = css`
   }
 `;
 
-const scroll0Style = css`
-  position: absolute;
-`;
-
 const hiddenStyle = css`
   visibility: hidden;
   transition: all 0.2s;
@@ -98,6 +94,7 @@ type CategoryProps = {
 function Category({ path, visible }: CategoryProps) {
   const [curPosition, setCurPosition] = useState(0);
   const [display, setDisplay] = useState(false);
+  const scrollY = window.scrollY;
 
   const throttle = _.throttle(() => {
     if (window.scrollY > curPosition) {
@@ -142,7 +139,7 @@ function Category({ path, visible }: CategoryProps) {
     <CategoryWrapper
       css={
         visible
-          ? window.scrollY !== 0
+          ? scrollY !== 0
             ? display
               ? visibleStyle
               : hiddenStyle

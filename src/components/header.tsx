@@ -40,6 +40,7 @@ const visibleStyle = css`
 const Header = ({ siteTitle, style, visible, wrapperStyle }: HeaderProps) => {
   const [curPosition, setCurPosition] = useState(0);
   const [display, setDisplay] = useState(false);
+  const scrollY = window.scrollY;
 
   const throttle = _.throttle(() => {
     if (window.scrollY > curPosition) {
@@ -63,7 +64,7 @@ const Header = ({ siteTitle, style, visible, wrapperStyle }: HeaderProps) => {
       <HeaderWrapper
         css={[
           visible
-            ? window.scrollY !== 0
+            ? scrollY !== 0
               ? display
                 ? visibleStyle
                 : hiddenStyle
