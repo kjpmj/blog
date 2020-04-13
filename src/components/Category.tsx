@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import _ from 'lodash';
 import palette from '../style/palette';
 import { css } from '@emotion/core';
+import { window } from 'browser-monads';
 
 const CategoryWrapper = styled.div`
   position: fixed;
@@ -94,9 +95,6 @@ type CategoryProps = {
 function Category({ path, visible }: CategoryProps) {
   const [curPosition, setCurPosition] = useState(0);
   const [display, setDisplay] = useState(false);
-  const [scrollZero, setScrollZero] = useState(() => {
-    return window.scrollY !== 0;
-  });
 
   const throttle = _.throttle(() => {
     if (window.scrollY > curPosition) {
@@ -109,10 +107,6 @@ function Category({ path, visible }: CategoryProps) {
 
   if (visible) {
     useEffect(() => {
-      setScrollZero(() => {
-        return window.scrollY !== 0;
-      });
-
       window.addEventListener('scroll', throttle);
 
       return () => {
@@ -145,7 +139,7 @@ function Category({ path, visible }: CategoryProps) {
     <CategoryWrapper
       css={
         visible
-          ? scrollZero
+          ? window.scrollY !== 0
             ? display
               ? visibleStyle
               : hiddenStyle
