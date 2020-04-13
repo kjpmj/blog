@@ -1,29 +1,21 @@
 import { Link } from 'gatsby';
 import React, { useState, useEffect } from 'react';
-import { css } from '@emotion/core';
+import { css, SerializedStyles } from '@emotion/core';
 import styled from '@emotion/styled';
 import _ from 'lodash';
 import palette from '../style/palette';
 
 type HeaderProps = {
   siteTitle: string;
+  style: SerializedStyles;
+  visible: boolean;
+  wrapperStyle: SerializedStyles;
 };
 
 const HeaderWrapper = styled.div`
-  position: fixed;
   width: 100%;
   z-index: 1000;
   background-color: ${palette.white};
-`;
-
-const HeaderStlye = css`
-  box-shadow: 0 1px 1px 0 rgba(134, 142, 150, 0.05),
-    0 5px 10px 0 rgba(134, 142, 150, 0.1);
-  display: flex;
-  justify-content: center;
-  padding: 1rem 0 1rem 0;
-  max-height: 3rem;
-  height: 3rem;
 `;
 
 const HeaderContentStyle = css`
@@ -45,9 +37,9 @@ const visibleStyle = css`
   transform: translateY(0);
 `;
 
-const Header = ({ siteTitle }: HeaderProps) => {
+const Header = ({ siteTitle, style, visible, wrapperStyle }: HeaderProps) => {
   const [curPosition, setCurPosition] = useState(0);
-  const [display, setDisplay] = useState(true);
+  const [display, setDisplay] = useState(false);
 
   const throttle = _.throttle(() => {
     if (window.scrollY > curPosition) {
@@ -68,8 +60,20 @@ const Header = ({ siteTitle }: HeaderProps) => {
 
   return (
     <>
-      <HeaderWrapper css={display ? visibleStyle : hiddenStyle}>
-        <header css={HeaderStlye}>
+      <HeaderWrapper
+        css={[
+          visible
+            ? window.scrollY !== 0
+              ? display
+                ? visibleStyle
+                : hiddenStyle
+              : ''
+            : '',
+          ,
+          wrapperStyle,
+        ]}
+      >
+        <header css={style}>
           <div css={HeaderContentStyle}>
             <h1 style={{ margin: 0 }}>
               <Link to="/">{siteTitle}</Link>

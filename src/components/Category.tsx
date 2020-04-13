@@ -92,11 +92,12 @@ const visibleStyle = css`
 
 type CategoryProps = {
   path: string;
+  visible: boolean;
 };
 
-function Category({ path }: CategoryProps) {
+function Category({ path, visible }: CategoryProps) {
   const [curPosition, setCurPosition] = useState(0);
-  const [display, setDisplay] = useState(true);
+  const [display, setDisplay] = useState(false);
 
   const throttle = _.throttle(() => {
     if (window.scrollY > curPosition) {
@@ -107,13 +108,15 @@ function Category({ path }: CategoryProps) {
     setCurPosition(window.scrollY);
   }, 100);
 
-  useEffect(() => {
-    window.addEventListener('scroll', throttle);
+  if (visible) {
+    useEffect(() => {
+      window.addEventListener('scroll', throttle);
 
-    return () => {
-      window.removeEventListener('scroll', throttle);
-    };
-  }, [curPosition]);
+      return () => {
+        window.removeEventListener('scroll', throttle);
+      };
+    }, [curPosition]);
+  }
 
   const data = useStaticQuery<Query>(graphql`
     {
@@ -136,7 +139,17 @@ function Category({ path }: CategoryProps) {
   const categoryPath: string = decodeURI(path).split('/')[1];
 
   return (
-    <CategoryWrapper css={display ? visibleStyle : hiddenStyle}>
+    <CategoryWrapper
+      css={
+        visible
+          ? window.scrollY !== 0
+            ? display
+              ? visibleStyle
+              : hiddenStyle
+            : ''
+          : ''
+      }
+    >
       <CategoryTitle>Category</CategoryTitle>
       <div>
         {dirKeys.map(dir => (
