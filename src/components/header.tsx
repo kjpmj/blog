@@ -40,7 +40,9 @@ const visibleStyle = css`
 const Header = ({ siteTitle, style, visible, wrapperStyle }: HeaderProps) => {
   const [curPosition, setCurPosition] = useState(0);
   const [display, setDisplay] = useState(false);
-  const scrollY = window.scrollY;
+  const [scrollZero, setScrollZero] = useState(() => {
+    return window.scrollY !== 0;
+  });
 
   const throttle = _.throttle(() => {
     if (window.scrollY > curPosition) {
@@ -52,6 +54,10 @@ const Header = ({ siteTitle, style, visible, wrapperStyle }: HeaderProps) => {
   }, 100);
 
   useEffect(() => {
+    setScrollZero(() => {
+      return window.scrollY !== 0;
+    });
+
     window.addEventListener('scroll', throttle);
 
     return () => {
@@ -64,7 +70,7 @@ const Header = ({ siteTitle, style, visible, wrapperStyle }: HeaderProps) => {
       <HeaderWrapper
         css={[
           visible
-            ? scrollY !== 0
+            ? scrollZero
               ? display
                 ? visibleStyle
                 : hiddenStyle

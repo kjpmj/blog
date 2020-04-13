@@ -94,7 +94,9 @@ type CategoryProps = {
 function Category({ path, visible }: CategoryProps) {
   const [curPosition, setCurPosition] = useState(0);
   const [display, setDisplay] = useState(false);
-  const scrollY = window.scrollY;
+  const [scrollZero, setScrollZero] = useState(() => {
+    return window.scrollY !== 0;
+  });
 
   const throttle = _.throttle(() => {
     if (window.scrollY > curPosition) {
@@ -107,6 +109,10 @@ function Category({ path, visible }: CategoryProps) {
 
   if (visible) {
     useEffect(() => {
+      setScrollZero(() => {
+        return window.scrollY !== 0;
+      });
+
       window.addEventListener('scroll', throttle);
 
       return () => {
@@ -139,7 +145,7 @@ function Category({ path, visible }: CategoryProps) {
     <CategoryWrapper
       css={
         visible
-          ? scrollY !== 0
+          ? scrollZero
             ? display
               ? visibleStyle
               : hiddenStyle
