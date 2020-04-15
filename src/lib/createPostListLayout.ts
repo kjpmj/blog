@@ -28,7 +28,7 @@ export async function createPostListLayout({
                   }
                 }
               }
-              createAt(formatString: "DD MMMM, YYYY")
+              createAt(formatString: "YYYY-MM-DD")
             }
             excerpt(pruneLength: 200)
           }
@@ -37,6 +37,10 @@ export async function createPostListLayout({
       }
     }
   `);
+
+  if (errors) {
+    throw errors;
+  }
 
   const { allFile } = data;
 
@@ -54,10 +58,6 @@ export async function createPostListLayout({
 
   const postListObj: Object = _.groupBy(postList, 'relativeDirectory');
   const postDirKeys: string[] = _.keys(postListObj);
-
-  if (errors) {
-    throw errors;
-  }
 
   postDirKeys.forEach(dirName => {
     createPage({

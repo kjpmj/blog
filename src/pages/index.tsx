@@ -101,7 +101,7 @@ const IndexPage: React.FC = () => {
                   }
                 }
               }
-              createAt(formatString: "DD MMMM, YYYY")
+              createAt(formatString: "YYYY-MM-DD")
             }
             excerpt(pruneLength: 200)
           }
