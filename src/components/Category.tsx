@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useStaticQuery, graphql, Link } from 'gatsby';
 import { Query } from '../../types/graphql-types';
 import styled from '@emotion/styled';
 import _ from 'lodash';
 import palette from '../style/palette';
 import { css } from '@emotion/core';
-import { window } from 'browser-monads';
 
 const CategoryWrapper = styled.div`
   position: fixed;
@@ -93,26 +92,22 @@ type CategoryProps = {
 };
 
 function Category({ path, visible }: CategoryProps) {
-  const [curPosition, setCurPosition] = useState(0);
-  const [display, setDisplay] = useState(false);
-
-  const throttle = _.throttle(() => {
-    if (window.scrollY > curPosition) {
-      setDisplay(false);
-    } else {
-      setDisplay(true);
-    }
-    setCurPosition(window.scrollY);
-  }, 100);
+  const [display, setDisplay] = useState(true);
+  let curPosition = 0;
 
   if (visible) {
     useEffect(() => {
+      const throttle = _.throttle(() => {
+        setDisplay(() => window.scrollY <= curPosition);
+        curPosition = window.scrollY;
+      }, 100);
+
       window.addEventListener('scroll', throttle);
 
       return () => {
         window.removeEventListener('scroll', throttle);
       };
-    }, [curPosition]);
+    }, []);
   }
 
   const data = useStaticQuery<Query>(graphql`
@@ -138,13 +133,11 @@ function Category({ path, visible }: CategoryProps) {
   return (
     <CategoryWrapper
       css={
-        visible
-          ? window.scrollY !== 0
-            ? display
-              ? visibleStyle
-              : hiddenStyle
-            : ''
-          : ''
+        display
+          ? ''
+          : css`
+              visibility: hidden;
+            `
       }
     >
       <CategoryTitle>Category</CategoryTitle>

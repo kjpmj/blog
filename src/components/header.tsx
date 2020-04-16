@@ -1,10 +1,10 @@
 import { Link } from 'gatsby';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { css, SerializedStyles } from '@emotion/core';
 import styled from '@emotion/styled';
 import _ from 'lodash';
 import palette from '../style/palette';
-import { window } from 'browser-monads';
+import { useScrollPosition } from '../hooks/useScrollPosition';
 
 type HeaderProps = {
   siteTitle: string;
@@ -39,38 +39,40 @@ const visibleStyle = css`
 `;
 
 const Header = ({ siteTitle, style, visible, wrapperStyle }: HeaderProps) => {
-  const [curPosition, setCurPosition] = useState(0);
-  const [display, setDisplay] = useState(false);
+  const [display, setDisplay] = useState(true);
+  let curPosition = 0;
 
-  const throttle = _.throttle(() => {
-    if (window.scrollY > curPosition) {
-      setDisplay(false);
-    } else {
-      setDisplay(true);
-    }
-    setCurPosition(window.scrollY);
-  }, 100);
+  useScrollPosition(({ prevPos, currPos }) => {
+    console.log(prevPos);
+    console.log(currPos);
+  }, []);
 
   useEffect(() => {
+    const throttle = _.throttle(() => {
+      setDisplay(() => window.scrollY <= curPosition);
+      curPosition = window.scrollY;
+    }, 100);
+
     window.addEventListener('scroll', throttle);
 
     return () => {
       window.removeEventListener('scroll', throttle);
     };
-  }, [curPosition]);
+  }, []);
+
+  console.log(window.scrollY);
 
   return (
     <>
       <HeaderWrapper
         css={[
           visible
-            ? window.scrollY !== 0
-              ? display
-                ? visibleStyle
-                : hiddenStyle
-              : ''
+            ? display
+              ? ''
+              : css`
+                  visibility: hidden;
+                `
             : '',
-          ,
           wrapperStyle,
         ]}
       >
