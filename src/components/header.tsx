@@ -30,19 +30,23 @@ const backgroundStyle = css`
 `;
 
 const hiddenStyle = css`
-  transition: transform 0.2s linear;
+  transition: transform 0.2s ease-out;
   transform: translateY(-6rem);
 `;
 
 const visibleStyle = css`
-  transition: transform 0.2s linear;
+  transition: transform 0.2s ease-out;
   transform: translateY(0);
 `;
 
 const Header = ({ siteTitle, style, visible, wrapperStyle }: HeaderProps) => {
   const location = useLocation();
   const [display, setDisplay] = useState(() => {
-    const scrollPosition = location.state.scrollPosition || 0;
+    let scrollPosition = 0;
+
+    if (location.state) {
+      scrollPosition = location.state.scrollPosition;
+    }
     return scrollPosition === 0;
   });
 
