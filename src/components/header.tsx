@@ -45,7 +45,7 @@ const Header = ({ siteTitle, style, visible, wrapperStyle }: HeaderProps) => {
     let scrollPosition = 0;
 
     if (location.state) {
-      scrollPosition = location.state.scrollPosition;
+      scrollPosition = location.state.scrollPosition || 0;
     }
     return scrollPosition === 0;
   });
