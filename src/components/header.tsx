@@ -1,6 +1,7 @@
 import { Link } from 'gatsby';
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { css, SerializedStyles } from '@emotion/core';
+import { useLocation, createHistory, LocationProps } from '@reach/router';
 import styled from '@emotion/styled';
 import _ from 'lodash';
 import palette from '../style/palette';
@@ -39,40 +40,45 @@ const visibleStyle = css`
 `;
 
 const Header = ({ siteTitle, style, visible, wrapperStyle }: HeaderProps) => {
-  const [display, setDisplay] = useState(true);
+  const location = useLocation();
+  const [display, setDisplay] = useState(() => {
+    const scrollPosition = location.state.scrollPosition || 0;
+    return scrollPosition === 0;
+  });
+
   let curPosition = 0;
 
-  useScrollPosition(({ prevPos, currPos }) => {
-    console.log(prevPos);
-    console.log(currPos);
-  }, []);
-
   useEffect(() => {
+    const beforeUnloadCallback = () => {
+      history.replaceState(
+        _.assignIn(history.state, { scrollPosition: 0 }),
+        '',
+      );
+    };
+
     const throttle = _.throttle(() => {
       setDisplay(() => window.scrollY <= curPosition);
       curPosition = window.scrollY;
+      history.replaceState(
+        _.assignIn(history.state, { scrollPosition: window.scrollY }),
+        '',
+      );
     }, 100);
 
     window.addEventListener('scroll', throttle);
+    window.addEventListener('beforeunload', beforeUnloadCallback);
 
     return () => {
       window.removeEventListener('scroll', throttle);
+      window.removeEventListener('beforeunload', beforeUnloadCallback);
     };
   }, []);
-
-  console.log(window.scrollY);
 
   return (
     <>
       <HeaderWrapper
         css={[
-          visible
-            ? display
-              ? ''
-              : css`
-                  visibility: hidden;
-                `
-            : '',
+          visible ? (display ? visibleStyle : hiddenStyle) : '',
           wrapperStyle,
         ]}
       >
