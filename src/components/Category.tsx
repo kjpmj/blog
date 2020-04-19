@@ -7,32 +7,14 @@ import palette from '../style/palette';
 import { css } from '@emotion/core';
 
 const CategoryWrapper = styled.div`
-  position: fixed;
-  max-width: 10%;
-  top: 10rem;
-
-  @media only screen and (max-width: 1440px) {
-    max-width: 12%;
-  }
-
-  @media only screen and (max-width: 1200px) {
-    max-width: 15%;
-  }
-
-  @media only screen and (max-width: 1024px) {
-    max-width: 18%;
-  }
-`;
-
-const CategoryTitle = styled.div`
-  font-family: NanumSquareRoundEB, sans-serif;
-  font-size: 2rem;
-  padding-bottom: 1rem;
-  word-break: break-all;
+  z-index: 1100;
+  max-width: 80%;
+  background-color: rgba(255, 255, 255, 0.9);
 `;
 
 const CategoryLinkWrapper = styled.div`
-  padding: 0.3rem 0 0.3rem 0;
+  padding: 0.3rem 0 0.3rem 0.5rem;
+  line-height: 1.5rem;
 
   a {
     font-size: 1.1rem;
@@ -40,7 +22,7 @@ const CategoryLinkWrapper = styled.div`
     display: block;
 
     &:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
       transform-origin: 0 100%;
       color: ${palette.main()[5]};
     }
@@ -56,60 +38,11 @@ const CurrentCategoryStyle = css`
   }
 `;
 
-const hiddenStyle = css`
-  visibility: hidden;
-  transition: all 0.2s;
-  animation: fadeout 0.2s;
-
-  @keyframes fadeout {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-`;
-
-const visibleStyle = css`
-  visibility: visible;
-  transition: all 0.2s;
-  animation: fadein 0.2s;
-
-  @keyframes fadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-`;
-
 type CategoryProps = {
   path: string;
-  visible: boolean;
 };
 
-function Category({ path, visible }: CategoryProps) {
-  const [display, setDisplay] = useState(true);
-  let curPosition = 0;
-
-  if (visible) {
-    useEffect(() => {
-      const throttle = _.throttle(() => {
-        setDisplay(() => window.scrollY <= curPosition);
-        curPosition = window.scrollY;
-      }, 100);
-
-      window.addEventListener('scroll', throttle);
-
-      return () => {
-        window.removeEventListener('scroll', throttle);
-      };
-    }, []);
-  }
-
+function Category({ path }: CategoryProps) {
   const data = useStaticQuery<Query>(graphql`
     {
       allFile(filter: { extension: { eq: "md" } }) {
@@ -131,16 +64,7 @@ function Category({ path, visible }: CategoryProps) {
   const categoryPath: string = decodeURI(path).split('/')[1];
 
   return (
-    <CategoryWrapper
-      css={
-        display
-          ? ''
-          : css`
-              visibility: hidden;
-            `
-      }
-    >
-      <CategoryTitle>Category</CategoryTitle>
+    <CategoryWrapper>
       <div>
         {dirKeys.map(dir => (
           <CategoryLinkWrapper

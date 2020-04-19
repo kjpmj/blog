@@ -17,7 +17,7 @@ const PostIndexWrapper = styled(RightContentContainer)`
 
   > div {
     position: fixed;
-    max-width: 10%;
+    max-width: 15%;
     top: 10rem;
 
     > div > div {

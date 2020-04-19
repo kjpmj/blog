@@ -9,11 +9,10 @@ import {
   LayoutContainer,
   ContentContainer,
   BodyContainer,
-  CategoryContainer,
+  LeftContentContainer,
 } from './CommonStyle';
 import palette from '../style/palette';
 import SubTitle from './SubTitle';
-import { css } from '@emotion/core';
 
 type PostLayoutProps = {
   children: ReactNode;
@@ -43,16 +42,6 @@ const PostContentWarpper = styled(ContentContainer)`
   }
 `;
 
-const HeaderStlye = css`
-  box-shadow: 0 1px 1px 0 rgba(134, 142, 150, 0.05),
-    0 5px 10px 0 rgba(134, 142, 150, 0.1);
-  display: flex;
-  justify-content: center;
-  padding: 1rem 0 1rem 0;
-  max-height: 3rem;
-  height: 3rem;
-`;
-
 const PostLayout = ({ children, headings, path }: PostLayoutProps) => {
   const data = useStaticQuery(graphql`
     query {
@@ -66,18 +55,11 @@ const PostLayout = ({ children, headings, path }: PostLayoutProps) => {
 
   return (
     <LayoutContainer>
-      <Header
-        siteTitle={data.site.siteMetadata.title}
-        style={HeaderStlye}
-        visible
-        wrapperStyle={css`
-          position: fixed;
-        `}
-      />
+      <Header siteTitle={data.site.siteMetadata.title} path={path} />
       <BodyContainer>
-        <CategoryContainer>
-          <Category path={path} visible />
-        </CategoryContainer>
+        <LeftContentContainer>
+          {/* <Category path={path} visible /> */}
+        </LeftContentContainer>
         <PostContentWarpper>
           <main>{children}</main>
         </PostContentWarpper>

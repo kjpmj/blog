@@ -1,28 +1,61 @@
 import { Link } from 'gatsby';
-import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { css, SerializedStyles } from '@emotion/core';
-import { useLocation, createHistory, LocationProps } from '@reach/router';
+import React, { useState, useEffect, useRef } from 'react';
+import { css } from '@emotion/core';
+import { useLocation, WindowLocation } from '@reach/router';
 import styled from '@emotion/styled';
 import _ from 'lodash';
 import palette from '../style/palette';
-import { useScrollPosition } from '../hooks/useScrollPosition';
+import { IoMdHome, IoIosHome } from 'react-icons/io';
+import { IconContext } from 'react-icons';
+import Category from './Category';
 
 type HeaderProps = {
   siteTitle: string;
-  style: SerializedStyles;
-  visible: boolean;
-  wrapperStyle: SerializedStyles;
+  path: string;
+};
+
+type HistoryStateProps = {
+  scrollPosition?: number;
 };
 
 const HeaderWrapper = styled.div`
+  position: fixed;
   width: 100%;
   z-index: 1000;
-  background-color: ${palette.white};
+  background-color: rgba(255, 255, 255, 0.9);
+`;
+
+const HeaderStlye = css`
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0 1rem 0;
+  max-height: 3rem;
+  height: 3rem;
+  transition: all 1s ease-out;
 `;
 
 const HeaderContentStyle = css`
-  max-width: 50%;
-  width: 50%;
+  max-width: 90%;
+  width: 90%;
+  display: flex;
+
+  > div {
+    height: 3rem;
+    line-height: 4rem;
+    margin-right: 1.5%;
+    cursor: pointer;
+    font-family: 'NanumSquareRoundB';
+    font-size: 1.2rem;
+
+    > span {
+    }
+  }
+
+  .icon-home {
+    &:hover {
+      color: ${palette.main()[5]};
+    }
+  }
 `;
 
 const backgroundStyle = css`
@@ -30,25 +63,38 @@ const backgroundStyle = css`
 `;
 
 const hiddenStyle = css`
-  transition: transform 0.2s ease-out;
+  transition: transform 0.1s ease-out;
   transform: translateY(-6rem);
 `;
 
 const visibleStyle = css`
-  transition: transform 0.2s ease-out;
+  transition: transform 0.1s ease-out;
   transform: translateY(0);
 `;
 
-const Header = ({ siteTitle, style, visible, wrapperStyle }: HeaderProps) => {
-  const location = useLocation();
+const categoryHiddenStyle = css`
+  transition: transform 0.1s ease-out;
+  transform: translateY(-6rem);
+`;
+
+const categoryVisibleStyle = css`
+  transition: transform 0.1s ease-out;
+  transform: translateY(0);
+`;
+
+const Header = ({ siteTitle, path }: HeaderProps) => {
+  const location: WindowLocation = useLocation();
+  const headerRef: React.MutableRefObject<HTMLHeadElement> = useRef(null);
   const [display, setDisplay] = useState(() => {
     let scrollPosition = 0;
 
     if (location.state) {
-      scrollPosition = location.state.scrollPosition || 0;
+      const state: HistoryStateProps = location.state;
+      scrollPosition = state.scrollPosition || 0;
     }
     return scrollPosition === 0;
   });
+  const [categoryDisplay, setCategoryDisplay] = useState(false);
 
   let curPosition = 0;
 
@@ -61,6 +107,13 @@ const Header = ({ siteTitle, style, visible, wrapperStyle }: HeaderProps) => {
     };
 
     const throttle = _.throttle(() => {
+      if (window.scrollY !== 0) {
+        headerRef.current.style.boxShadow =
+          ' 0 1px 1px 0 rgba(134, 142, 150, 0.05), 0 5px 10px 0 rgba(134, 142, 150, 0.1)';
+      } else {
+        headerRef.current.style.boxShadow = 'none';
+      }
+
       setDisplay(() => window.scrollY <= curPosition);
       curPosition = window.scrollY;
       history.replaceState(
@@ -80,17 +133,25 @@ const Header = ({ siteTitle, style, visible, wrapperStyle }: HeaderProps) => {
 
   return (
     <>
-      <HeaderWrapper
-        css={[
-          visible ? (display ? visibleStyle : hiddenStyle) : '',
-          wrapperStyle,
-        ]}
-      >
-        <header css={style}>
+      <HeaderWrapper css={display ? visibleStyle : hiddenStyle}>
+        <header css={HeaderStlye} ref={headerRef}>
           <div css={HeaderContentStyle}>
-            <h1 style={{ margin: 0 }}>
-              <Link to="/">{siteTitle}</Link>
-            </h1>
+            <div>
+              <IconContext.Provider
+                value={{ size: '3rem', className: 'icon-home' }}
+              >
+                <Link to="/">
+                  <IoMdHome />
+                </Link>
+              </IconContext.Provider>
+            </div>
+            <div
+              onMouseEnter={() => setCategoryDisplay(true)}
+              onMouseLeave={() => setCategoryDisplay(false)}
+            >
+              <span>Post</span>
+              {categoryDisplay && <Category path={path} />}
+            </div>
           </div>
         </header>
       </HeaderWrapper>
