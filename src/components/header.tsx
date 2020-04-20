@@ -79,15 +79,18 @@ const visibleStyle = css`
   transform: translateY(0);
 `;
 
-const categoryHiddenStyle = css`
-  transition: transform 0.1s ease-out;
-  transform: translateY(-6rem);
-`;
+// const categoryHiddenStyle = css`
+//   transition: transform 0.1s ease-out;
+//   /* transform: translateX(-50rem); */
+//   transform: scaleY(0);
+//   transform-origin: 100% 0;
+// `;
 
-const categoryVisibleStyle = css`
-  transition: transform 0.1s ease-out;
-  transform: translateY(0);
-`;
+// const categoryVisibleStyle = css`
+//   transition: transform 0.1s ease-out;
+//   transform: scaleY(1);
+//   transform-origin: 100% 0;
+// `;
 
 const Header = ({ siteTitle, path }: HeaderProps) => {
   const location: WindowLocation = useLocation();
@@ -117,10 +120,7 @@ const Header = ({ siteTitle, path }: HeaderProps) => {
     };
 
     const throttle = _.throttle(() => {
-      if (categoryDisplay) {
-        setCategoryDisplay(false);
-      }
-
+      setCategoryDisplay(false);
       if (window.scrollY !== 0) {
         headerRef.current.style.boxShadow =
           ' 0 1px 1px 0 rgba(134, 142, 150, 0.05), 0 5px 10px 0 rgba(134, 142, 150, 0.1)';
@@ -143,7 +143,7 @@ const Header = ({ siteTitle, path }: HeaderProps) => {
       window.removeEventListener('scroll', throttle);
       window.removeEventListener('beforeunload', beforeUnloadCallback);
     };
-  }, [categoryDisplay]);
+  }, []);
 
   return (
     <>
@@ -162,7 +162,7 @@ const Header = ({ siteTitle, path }: HeaderProps) => {
               >
                 <IoIosList />
               </IconContext.Provider>
-              {categoryDisplay && <Category path={path} />}
+              {<Category path={path} visible={categoryDisplay} />}
             </div>
             <div>
               <IconContext.Provider

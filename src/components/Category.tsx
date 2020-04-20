@@ -1,24 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStaticQuery, graphql, Link } from 'gatsby';
 import { Query } from '../../types/graphql-types';
 import styled from '@emotion/styled';
 import _ from 'lodash';
 import palette from '../style/palette';
-import { css } from '@emotion/core';
+import { css, SerializedStyles } from '@emotion/core';
 
 const CategoryWrapper = styled.div`
   z-index: 1100;
-  max-width: 50%;
+  max-width: 100%;
   background-color: rgba(255, 255, 255, 0.9);
   position: absolute;
 `;
 
 const CategoryLinkWrapper = styled.div`
-  padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+  padding: 0.6rem 0.5rem 0.6rem 0.5rem;
   line-height: 1.5rem;
 
   a {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     word-break: break-all;
     display: block;
 
@@ -37,11 +37,61 @@ const CurrentCategoryStyle = css`
   }
 `;
 
+// const categoryHiddenStyle = css`
+//   transition: transform 0.1s ease-out;
+//   transform: scaleY(0);
+//   transform-origin: 100% 0;
+// `;
+
+// const categoryVisibleStyle = css`
+//   transition: transform 0.1s ease-out;
+//   transform: scaleY(1);
+//   transform-origin: 100% 0;
+// `;
+
 type CategoryProps = {
   path: string;
+  visible: boolean;
 };
 
-function Category({ path }: CategoryProps) {
+type CategoryLinkProps = {
+  dir: string;
+  fullName: string;
+  delay: number;
+  style: any;
+  visible: boolean;
+};
+
+function CategoryLink({
+  dir,
+  fullName,
+  delay,
+  style,
+  visible,
+}: CategoryLinkProps) {
+  const [display, setDisplay] = useState(false);
+
+  useEffect(() => {
+    const timeoutFunc = setTimeout(() => {
+      setDisplay(visible);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutFunc);
+    };
+  }, [visible]);
+
+  return (
+    display && (
+      <CategoryLinkWrapper css={style}>
+        {' '}
+        <Link to={`/${dir}`}>{fullName}</Link>
+      </CategoryLinkWrapper>
+    )
+  );
+}
+
+function Category({ path, visible }: CategoryProps) {
   const data = useStaticQuery<Query>(graphql`
     {
       allFile(filter: { extension: { eq: "md" } }) {
@@ -65,15 +115,15 @@ function Category({ path }: CategoryProps) {
   return (
     <CategoryWrapper>
       <div>
-        {dirKeys.map(dir => (
-          <CategoryLinkWrapper
+        {dirKeys.map((dir, index) => (
+          <CategoryLink
             key={dir}
-            css={categoryPath === dir ? CurrentCategoryStyle : ''}
-          >
-            <Link to={`/${dir}`}>
-              {dir} ({dirObj[dir].length})
-            </Link>
-          </CategoryLinkWrapper>
+            dir={dir}
+            fullName={`${dir} (${dirObj[dir].length})`}
+            delay={visible ? index * 30 : (dirKeys.length - 1 - index) * 30}
+            style={categoryPath === dir ? CurrentCategoryStyle : ''}
+            visible={visible}
+          />
         ))}
       </div>
     </CategoryWrapper>
