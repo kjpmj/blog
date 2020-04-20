@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React from 'react';
 import { useStaticQuery, graphql, Link } from 'gatsby';
 import { Query } from '../../types/graphql-types';
 import styled from '@emotion/styled';
@@ -8,12 +8,13 @@ import { css } from '@emotion/core';
 
 const CategoryWrapper = styled.div`
   z-index: 1100;
-  max-width: 80%;
+  max-width: 50%;
   background-color: rgba(255, 255, 255, 0.9);
+  position: absolute;
 `;
 
 const CategoryLinkWrapper = styled.div`
-  padding: 0.3rem 0 0.3rem 0.5rem;
+  padding: 0.3rem 0.5rem 0.3rem 0.5rem;
   line-height: 1.5rem;
 
   a {
@@ -22,8 +23,6 @@ const CategoryLinkWrapper = styled.div`
     display: block;
 
     &:hover {
-      transform: scale(1.05);
-      transform-origin: 0 100%;
       color: ${palette.main()[5]};
     }
   }

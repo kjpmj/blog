@@ -5,9 +5,10 @@ import { useLocation, WindowLocation } from '@reach/router';
 import styled from '@emotion/styled';
 import _ from 'lodash';
 import palette from '../style/palette';
-import { IoMdHome, IoIosHome } from 'react-icons/io';
+import { IoMdHome, IoIosList } from 'react-icons/io';
 import { IconContext } from 'react-icons';
 import Category from './Category';
+import useOutsideAlerter from '../hooks/useOutsideAlerter';
 
 type HeaderProps = {
   siteTitle: string;
@@ -56,6 +57,12 @@ const HeaderContentStyle = css`
       color: ${palette.main()[5]};
     }
   }
+
+  .icon-category {
+    &:hover {
+      color: ${palette.main()[5]};
+    }
+  }
 `;
 
 const backgroundStyle = css`
@@ -85,6 +92,7 @@ const categoryVisibleStyle = css`
 const Header = ({ siteTitle, path }: HeaderProps) => {
   const location: WindowLocation = useLocation();
   const headerRef: React.MutableRefObject<HTMLHeadElement> = useRef(null);
+  const categoryRef: React.MutableRefObject<HTMLDivElement> = useRef(null);
   const [display, setDisplay] = useState(() => {
     let scrollPosition = 0;
 
@@ -95,6 +103,8 @@ const Header = ({ siteTitle, path }: HeaderProps) => {
     return scrollPosition === 0;
   });
   const [categoryDisplay, setCategoryDisplay] = useState(false);
+
+  useOutsideAlerter(categoryRef, () => setCategoryDisplay(false));
 
   let curPosition = 0;
 
@@ -107,6 +117,10 @@ const Header = ({ siteTitle, path }: HeaderProps) => {
     };
 
     const throttle = _.throttle(() => {
+      if (categoryDisplay) {
+        setCategoryDisplay(false);
+      }
+
       if (window.scrollY !== 0) {
         headerRef.current.style.boxShadow =
           ' 0 1px 1px 0 rgba(134, 142, 150, 0.05), 0 5px 10px 0 rgba(134, 142, 150, 0.1)';
@@ -129,13 +143,27 @@ const Header = ({ siteTitle, path }: HeaderProps) => {
       window.removeEventListener('scroll', throttle);
       window.removeEventListener('beforeunload', beforeUnloadCallback);
     };
-  }, []);
+  }, [categoryDisplay]);
 
   return (
     <>
       <HeaderWrapper css={display ? visibleStyle : hiddenStyle}>
         <header css={HeaderStlye} ref={headerRef}>
           <div css={HeaderContentStyle}>
+            <div
+              onClick={() => setCategoryDisplay(!categoryDisplay)}
+              ref={categoryRef}
+            >
+              <IconContext.Provider
+                value={{
+                  size: '3rem',
+                  className: 'icon-category',
+                }}
+              >
+                <IoIosList />
+              </IconContext.Provider>
+              {categoryDisplay && <Category path={path} />}
+            </div>
             <div>
               <IconContext.Provider
                 value={{ size: '3rem', className: 'icon-home' }}
@@ -144,13 +172,6 @@ const Header = ({ siteTitle, path }: HeaderProps) => {
                   <IoMdHome />
                 </Link>
               </IconContext.Provider>
-            </div>
-            <div
-              onMouseEnter={() => setCategoryDisplay(true)}
-              onMouseLeave={() => setCategoryDisplay(false)}
-            >
-              <span>Post</span>
-              {categoryDisplay && <Category path={path} />}
             </div>
           </div>
         </header>
