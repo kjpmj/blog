@@ -3,7 +3,7 @@ import { Link, graphql, useStaticQuery } from 'gatsby';
 import { Query } from '../../types/graphql-types';
 
 import PostListLayout from '../components/PostListLayout';
-import './index.css';
+import '../style/index.css';
 import 'normalize.css';
 import palette from '../style/palette';
 import styled from '@emotion/styled';

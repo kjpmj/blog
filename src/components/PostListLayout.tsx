@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 
 import Header from './header';
-import Category from './Category';
 import styled from '@emotion/styled';
 import {
   BodyContainer,
@@ -11,8 +10,7 @@ import {
   ContentContainer,
   LeftContentContainer,
 } from './CommonStyle';
-import { css } from '@emotion/core';
-import palette from '../style/palette';
+import '../style/index.css';
 
 type PostListLayoutProps = {
   children: ReactNode;

@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 
 import Header from './header';
-import Category from './Category';
 import { MarkdownHeading } from '../../types/graphql-types';
 import styled from '@emotion/styled';
 import {
@@ -13,6 +12,7 @@ import {
 } from './CommonStyle';
 import palette from '../style/palette';
 import SubTitle from './SubTitle';
+import '../style/index.css';
 
 type PostLayoutProps = {
   children: ReactNode;
