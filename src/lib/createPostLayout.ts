@@ -34,6 +34,10 @@ export async function createPostLayout({ actions, graphql }: createPagesType) {
                 extension: { eq: "md" }
                 relativeDirectory: { eq: $category }
               }
+              sort: {
+                fields: childMarkdownRemark___frontmatter___createAt
+                order: ASC
+              }
             ) {
               edges {
                 next {
