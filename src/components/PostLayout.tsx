@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 
 import Header from './header';
-import { MarkdownHeading } from '../../types/graphql-types';
+import { MarkdownHeading, Query } from '../../types/graphql-types';
 import styled from '@emotion/styled';
 import {
   LayoutContainer,
@@ -43,7 +43,7 @@ const PostContentWarpper = styled(ContentContainer)`
 `;
 
 const PostLayout = ({ children, headings, path }: PostLayoutProps) => {
-  const data = useStaticQuery(graphql`
+  const data = useStaticQuery<Query>(graphql`
     query {
       site {
         siteMetadata {
@@ -57,9 +57,7 @@ const PostLayout = ({ children, headings, path }: PostLayoutProps) => {
     <LayoutContainer>
       <Header siteTitle={data.site.siteMetadata.title} path={path} />
       <BodyContainer>
-        <LeftContentContainer>
-          {/* <Category path={path} visible /> */}
-        </LeftContentContainer>
+        <LeftContentContainer />
         <PostContentWarpper>
           <main>{children}</main>
         </PostContentWarpper>

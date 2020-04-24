@@ -79,20 +79,7 @@ const visibleStyle = css`
   transform: translateY(0);
 `;
 
-// const categoryHiddenStyle = css`
-//   transition: transform 0.1s ease-out;
-//   /* transform: translateX(-50rem); */
-//   transform: scaleY(0);
-//   transform-origin: 100% 0;
-// `;
-
-// const categoryVisibleStyle = css`
-//   transition: transform 0.1s ease-out;
-//   transform: scaleY(1);
-//   transform-origin: 100% 0;
-// `;
-
-const Header = ({ siteTitle, path }: HeaderProps) => {
+const Header = ({ path }: HeaderProps) => {
   const location: WindowLocation = useLocation();
   const headerRef: React.MutableRefObject<HTMLHeadElement> = useRef(null);
   const categoryRef: React.MutableRefObject<HTMLDivElement> = useRef(null);
