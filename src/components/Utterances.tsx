@@ -9,6 +9,7 @@ type UtterancesProps = {
 
 const utterancesWrapperStyle = css`
   /* border-top: 1px solid ${palette.gray[5]}; */
+  margin-bottom: 5rem;
 `;
 
 function Utterances({ repo, issueNumber }: UtterancesProps) {

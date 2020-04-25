@@ -63,7 +63,7 @@ const postRowColWrpper = css`
 const categoryStyle = css`
   > span {
     color: ${palette.white};
-    background-color: ${palette.violet[4]};
+    background-color: ${palette.main()[4]};
     padding: 0.2rem 0.5rem 0.2rem 0.5rem;
   }
 `;

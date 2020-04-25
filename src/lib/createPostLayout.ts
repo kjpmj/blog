@@ -88,6 +88,8 @@ export async function createPostLayout({ actions, graphql }: createPagesType) {
           context: {
             html: node.childMarkdownRemark.html,
             title: node.childMarkdownRemark.frontmatter.title,
+            relativeDirectory: node.relativeDirectory,
+            createAt: node.childMarkdownRemark.frontmatter.createAt,
             headings: node.childMarkdownRemark.headings,
             issueNumber: node.childMarkdownRemark.frontmatter.issueNumber,
             nextPost: next

@@ -4,7 +4,7 @@ import { Query } from '../../types/graphql-types';
 import styled from '@emotion/styled';
 import _ from 'lodash';
 import palette from '../style/palette';
-import { css, SerializedStyles } from '@emotion/core';
+import { css } from '@emotion/core';
 
 const CategoryWrapper = styled.div`
   z-index: 1100;
@@ -36,18 +36,6 @@ const CurrentCategoryStyle = css`
     transform-origin: 0 100%;
   }
 `;
-
-// const categoryHiddenStyle = css`
-//   transition: transform 0.1s ease-out;
-//   transform: scaleY(0);
-//   transform-origin: 100% 0;
-// `;
-
-// const categoryVisibleStyle = css`
-//   transition: transform 0.1s ease-out;
-//   transform: scaleY(1);
-//   transform-origin: 100% 0;
-// `;
 
 type CategoryProps = {
   path: string;
