@@ -57,6 +57,7 @@ export async function createPostLayout({ actions, graphql }: createPagesType) {
                     frontmatter {
                       title
                       createAt(formatString: "YYYY-MM-DD HH:mm")
+                      issueNumber
                     }
                   }
                   relativeDirectory
@@ -88,6 +89,7 @@ export async function createPostLayout({ actions, graphql }: createPagesType) {
             html: node.childMarkdownRemark.html,
             title: node.childMarkdownRemark.frontmatter.title,
             headings: node.childMarkdownRemark.headings,
+            issueNumber: node.childMarkdownRemark.frontmatter.issueNumber,
             nextPost: next
               ? {
                   title: next.childMarkdownRemark.frontmatter.title,
