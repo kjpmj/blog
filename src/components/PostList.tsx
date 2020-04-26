@@ -21,13 +21,6 @@ const PostRowListWrapper = styled.div`
     display: block;
     padding: 1rem 0.25rem 1rem 0.25rem;
     border-bottom: 0.5px solid ${palette.gray[4]};
-
-    /* &:hover {
-      transition: all 0.1s linear;
-      transform: translateY(-0.5rem);
-      box-shadow: 0 0 0 0 rgba(134, 142, 150, 0.05),
-        0 5px 10px 0 rgba(134, 142, 150, 0.1);
-    } */
   }
 `;
 

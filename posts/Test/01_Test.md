@@ -1,5 +1,5 @@
 ---
-title: 게시물1
+title: Test Post
 issueNumber: '18'
 createAt: 2020-04-05 04:11
 mainImage: ../../src/images/gatsby-icon.png

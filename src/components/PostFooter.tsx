@@ -89,7 +89,7 @@ function PostFooter({ nextPost, prevPost }: PostFooterProps) {
             </Link>
           </IconContext.Provider>
         ) : (
-          '이전 글 없음'
+          <div css={postTitleStyle}>이전 글 없음</div>
         )}
       </div>
       <div css={nextPostStlye}>
@@ -103,7 +103,7 @@ function PostFooter({ nextPost, prevPost }: PostFooterProps) {
             </Link>
           </IconContext.Provider>
         ) : (
-          '다음 글 없음'
+          <div css={postTitleStyle}>다음 글 없음</div>
         )}
       </div>
     </div>
