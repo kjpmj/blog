@@ -15,10 +15,19 @@ export type PostListProps = {
 };
 
 const PostRowListWrapper = styled.div`
+  margin-bottom: 5rem;
+
   > a {
     display: block;
     padding: 1rem 0.25rem 1rem 0.25rem;
-    border-bottom: 1px solid ${palette.gray[5]};
+    border-bottom: 0.5px solid ${palette.gray[4]};
+
+    /* &:hover {
+      transition: all 0.1s linear;
+      transform: translateY(-0.5rem);
+      box-shadow: 0 0 0 0 rgba(134, 142, 150, 0.05),
+        0 5px 10px 0 rgba(134, 142, 150, 0.1);
+    } */
   }
 `;
 
