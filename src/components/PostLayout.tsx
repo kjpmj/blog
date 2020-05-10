@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 
 import Header from './header';
@@ -25,6 +25,32 @@ const PostContentWarpper = styled(ContentContainer)`
     color: ${palette.main()[5]};
   }
 
+  blockquote {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin-left: 0px;
+    margin-right: 0px;
+    border-left: 4px solid ${palette.main()[4]};
+    background: rgb(248, 249, 250, 0.8);
+    padding: 1rem 1rem 1rem 2rem;
+  }
+
+  code {
+    background-color: ${palette.main()[1]};
+    font-size: 0.9rem;
+    padding: 0.1rem 0.2rem 0.1rem 0.2rem;
+  }
+
+  h2 {
+    margin-top: 2.5rem;
+  }
+
+  p {
+    line-height: 1.3rem;
+  }
+
   hr {
     border: 0.5px solid ${palette.gray[5]};
   }
@@ -32,11 +58,8 @@ const PostContentWarpper = styled(ContentContainer)`
   a {
     font-style: italic;
     color: ${palette.gray[6]};
-    display: block;
 
     &:hover {
-      transform: scale(1.075);
-      transform-origin: 0 100%;
       color: ${palette.main()[5]};
     }
   }
@@ -52,6 +75,13 @@ const PostLayout = ({ children, headings, path }: PostLayoutProps) => {
       }
     }
   `);
+
+  useEffect(() => {
+    const anchors = document.querySelectorAll('div#post-block a:not(.anchor)');
+    anchors.forEach(anchor => {
+      anchor.setAttribute('target', '_sub');
+    });
+  }, []);
 
   return (
     <LayoutContainer>

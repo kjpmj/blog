@@ -73,16 +73,21 @@ function SubTitle({ headings }: SubTitleProps) {
         <div>
           {headings &&
             headings.map(heading => {
-              const value: string = heading.value.replace(/\s/g, '-');
+              const value: string = heading.value
+                .replace(/\s/g, '-')
+                .replace(/\./g, '')
+                .replace(/\?/g, '');
+
               const subTtitleWrapper = css`
                 padding-left: ${0.6 * (heading.depth - 1)}rem;
 
                 a {
                   display: block;
                   word-break: break-all;
+                  font-size: 0.95rem;
 
                   &:hover {
-                    transform: scale(1.1);
+                    transform: scale(1.05);
                     transform-origin: 0 100%;
                     color: ${palette.main()[5]};
                   }
@@ -91,9 +96,8 @@ function SubTitle({ headings }: SubTitleProps) {
 
               const curSubTitleStyle = css`
                 a {
-                  font-family: 'NanumSquareRoundB';
                   color: ${palette.main()[5]};
-                  transform: scale(1.1);
+                  transform: scale(1.05);
                   transform-origin: 0 100%;
                   transition: transform 0.2s linear;
                 }
@@ -107,7 +111,11 @@ function SubTitle({ headings }: SubTitleProps) {
 
               const isCurHeading: boolean =
                 curHeading.replace(/-/g, '') ===
-                heading.value.replace(/\s/g, '');
+                heading.value
+                  .replace(/\s/g, '')
+                  .replace(/\./g, '')
+                  .replace(/-/g, '')
+                  .replace(/\?/g, '');
 
               return (
                 <div
