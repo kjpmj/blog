@@ -46,8 +46,6 @@ const IndexPage: React.FC = () => {
   `;
   const { allFile, site } = useStaticQuery<Query>(LatestPostListQuery);
 
-  console.log(site);
-
   const postDataList = allFile.nodes.map(
     ({ childMarkdownRemark, relativeDirectory }) => ({
       title: childMarkdownRemark.frontmatter.title,
