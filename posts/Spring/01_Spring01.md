@@ -3,6 +3,7 @@ title: 01. 스프링이란 무엇인가
 issueNumber: '21'
 createAt: 2020-04-26 23:58
 mainImage: ../../src/images/Spring01.png
+description: 스프링은 자바 엔터프라이즈 개발을 편하게 해주고 애플리케이션 전반에 걸쳐 POJO를 중심으로 객체지향적 개발을 할 수 있게 도와주는 애플리케이션 프레임워크다.
 ---
 
 <img src="../../src/images/Spring01.png" ></img>

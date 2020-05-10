@@ -34,10 +34,19 @@ const IndexPage: React.FC = () => {
           relativeDirectory
         }
       }
+      site {
+        siteMetadata {
+          author
+          description
+          siteUrl
+          title
+        }
+      }
     }
   `;
+  const { allFile, site } = useStaticQuery<Query>(LatestPostListQuery);
 
-  const { allFile } = useStaticQuery<Query>(LatestPostListQuery);
+  console.log(site);
 
   const postDataList = allFile.nodes.map(
     ({ childMarkdownRemark, relativeDirectory }) => ({
@@ -53,7 +62,10 @@ const IndexPage: React.FC = () => {
 
   return (
     <PostListLayout path="/">
-      <PostList postDataList={postDataList} />
+      <PostList
+        postDataList={postDataList}
+        category={site.siteMetadata.author}
+      />
     </PostListLayout>
   );
 };

@@ -93,12 +93,7 @@ const htmlStyle = css`
 function PostList({ postDataList, category }: PostListProps) {
   return (
     <PostRowListWrapper>
-      {category &&
-        SEO({
-          title: category,
-          lang: 'ko',
-          description: '아나 왜 안되니',
-        })}
+      <SEO title={category} lang="ko" />
       {postDataList.map(
         ({ title, relativeDirectory, mainImage, html, createAt }) => {
           return (

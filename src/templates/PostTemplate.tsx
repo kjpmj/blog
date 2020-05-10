@@ -6,10 +6,12 @@ import PostFooter from '../components/PostFooter';
 import Utterances from '../components/Utterances';
 import { css } from '@emotion/core';
 import palette from '../style/palette';
+import SEO from '../components/seo';
 
 type IPostTemplateProps = ITemplateProps<{
   html: string;
   title: string;
+  description: string;
   createAt: string;
   relativeDirectory: string;
   issueNumber: string;
@@ -40,6 +42,7 @@ const categoryTimeInfoStyle = css`
 const PostTemplate: React.FC<IPostTemplateProps> = React.memo(props => {
   const {
     title,
+    description,
     relativeDirectory,
     createAt,
     issueNumber,
@@ -50,21 +53,24 @@ const PostTemplate: React.FC<IPostTemplateProps> = React.memo(props => {
   } = props.pageContext;
 
   return (
-    <PostLayout headings={headings} path={props.path}>
-      <div css={categoryTimeInfoStyle}>
-        <span>{createAt}</span>
-        <span>{relativeDirectory}</span>
-      </div>
-      <h1>
-        <title>{title}</title>
-      </h1>
-      <hr />
-      <div dangerouslySetInnerHTML={{ __html: html }} id="post-block"></div>
-      <PostFooter nextPost={nextPost} prevPost={prevPost} />
-      {issueNumber && (
-        <Utterances repo="kjpmj/blog" issueNumber={issueNumber} />
-      )}
-    </PostLayout>
+    <>
+      <SEO title={title} lang="ko" description={description} />
+      <PostLayout headings={headings} path={props.path}>
+        <div css={categoryTimeInfoStyle}>
+          <span>{createAt}</span>
+          <span>{relativeDirectory}</span>
+        </div>
+        <h1>
+          <title>{title}</title>
+        </h1>
+        <hr />
+        <div dangerouslySetInnerHTML={{ __html: html }} id="post-block"></div>
+        <PostFooter nextPost={nextPost} prevPost={prevPost} />
+        {issueNumber && (
+          <Utterances repo="kjpmj/blog" issueNumber={issueNumber} />
+        )}
+      </PostLayout>
+    </>
   );
 });
 
