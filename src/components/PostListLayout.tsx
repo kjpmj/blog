@@ -34,9 +34,7 @@ const PostListLayout = ({ children, path }: PostListLayoutProps) => {
     <LayoutContainer>
       <Header siteTitle={data.site.siteMetadata.title} path={path} />
       <BodyContainer>
-        <LeftContentContainer>
-          {/* <Category path={path} visible={false} /> */}
-        </LeftContentContainer>
+        <LeftContentContainer />
         <ContentContainer>
           <main>{children}</main>
         </ContentContainer>

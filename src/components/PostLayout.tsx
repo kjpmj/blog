@@ -21,8 +21,9 @@ type PostLayoutProps = {
 };
 
 const PostContentWarpper = styled(ContentContainer)`
-  main > h1:first-of-type {
+  main > h1:first-of-type > title {
     color: ${palette.main()[5]};
+    display: block;
   }
 
   blockquote {

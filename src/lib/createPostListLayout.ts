@@ -63,6 +63,7 @@ export async function createPostListLayout({
     createPage({
       path: dirName,
       context: {
+        category: dirName,
         postDataList: postListObj[dirName],
       },
       component: path.resolve(__dirname, '../templates/PostListTemplate.tsx'),

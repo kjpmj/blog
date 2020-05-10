@@ -3,10 +3,20 @@ module.exports = {
     title: `까먹기 전에 적자`,
     description: `까먹기 전에 적는 낙서장.`,
     author: `@kjpmj`,
+    siteUrl: `https://kjpmj-blog.netlify.app/`,
   },
   plugins: [
     `gatsby-plugin-typescript`,
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-sitemap`,
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: `https://kjpmj-blog.netlify.app/`,
+        sitemap: `https://kjpmj-blog.netlify.app/sitemap.xml`,
+        policy: [{ userAgent: '*', allow: '/' }],
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {

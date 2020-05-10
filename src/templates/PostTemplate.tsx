@@ -55,7 +55,9 @@ const PostTemplate: React.FC<IPostTemplateProps> = React.memo(props => {
         <span>{createAt}</span>
         <span>{relativeDirectory}</span>
       </div>
-      <h1>{title}</h1>
+      <h1>
+        <title>{title}</title>
+      </h1>
       <hr />
       <div dangerouslySetInnerHTML={{ __html: html }} id="post-block"></div>
       <PostFooter nextPost={nextPost} prevPost={prevPost} />

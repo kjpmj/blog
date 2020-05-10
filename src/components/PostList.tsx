@@ -3,6 +3,7 @@ import palette from '../style/palette';
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
+import SEO from './seo';
 
 export type PostListProps = {
   postDataList: Array<{
@@ -12,6 +13,7 @@ export type PostListProps = {
     html: string;
     createAt: string;
   }>;
+  category: string;
 };
 
 const PostRowListWrapper = styled.div`
@@ -52,6 +54,10 @@ const titleStyle = css`
   font-size: 2rem;
   font-family: NanumSquareRoundB, sans-serif;
   margin-bottom: 1rem;
+
+  title {
+    display: block;
+  }
 `;
 
 const postRowColWrpper = css`
@@ -84,9 +90,15 @@ const htmlStyle = css`
   padding: 0 0.5rem 0 0.5rem;
 `;
 
-function PostList({ postDataList }: PostListProps) {
+function PostList({ postDataList, category }: PostListProps) {
   return (
     <PostRowListWrapper>
+      {category &&
+        SEO({
+          title: category,
+          lang: 'ko',
+          description: '아나 왜 안되니',
+        })}
       {postDataList.map(
         ({ title, relativeDirectory, mainImage, html, createAt }) => {
           return (
@@ -101,7 +113,9 @@ function PostList({ postDataList }: PostListProps) {
                       <span>{relativeDirectory}</span>
                     </div>
                   </div>
-                  <div css={titleStyle}>{title}</div>
+                  <div css={titleStyle}>
+                    <title>{title}</title>
+                  </div>
                   <div css={htmlStyle}>{html}</div>
                 </div>
                 {mainImage && (
