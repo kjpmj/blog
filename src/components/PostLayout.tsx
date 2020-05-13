@@ -39,9 +39,16 @@ const PostContentWarpper = styled(ContentContainer)`
   }
 
   code {
-    background-color: ${palette.main()[1]};
-    font-size: 0.9rem;
-    padding: 0.1rem 0.2rem 0.1rem 0.2rem;
+    &.language-text {
+      background-color: ${palette.main()[1]};
+      font-size: 0.9rem;
+      padding: 0.1rem 0.2rem 0.1rem 0.2rem;
+      color: ${palette.gray[7]};
+    }
+
+    &.language-java {
+      font-family: D2Coding;
+    }
   }
 
   h2 {

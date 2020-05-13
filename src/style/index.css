@@ -26,6 +26,20 @@
     url('../style/font/NanumSquareRoundEB.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'D2Coding';
+  src: url('../style/font/D2Coding.woff2') format('woff2'),
+    url('../style/font/D2Coding.woff') format('woff'),
+    url('../style/font/D2Coding.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'D2CodingBold';
+  src: url('../style/font/D2CodingBold.woff2') format('woff2'),
+    url('../style/font/D2CodingBold.woff') format('woff'),
+    url('../style/font/D2CodingBold.ttf') format('truetype');
+}
+
 html {
   font-family: NanumSquareRoundR, sans-serif;
   font-size: 16px;
