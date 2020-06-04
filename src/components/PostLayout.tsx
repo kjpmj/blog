@@ -49,6 +49,10 @@ const PostContentWarpper = styled(ContentContainer)`
     &.language-java {
       font-family: D2Coding;
     }
+
+    &.language-java + span.line-numbers-rows {
+      padding: 1em 0 0 1em;
+    }
   }
 
   h2 {
