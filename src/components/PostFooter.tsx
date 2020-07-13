@@ -47,6 +47,8 @@ const PostFooterWrapperStyle = css`
 
 const prevPostStyle = css`
   padding-left: 0.5rem;
+  max-width: 50%;
+  text-align: left;
 
   &:hover {
     a {
@@ -60,6 +62,8 @@ const prevPostStyle = css`
 
 const nextPostStlye = css`
   padding-right: 0.5rem;
+  max-width: 50%;
+  text-align: right;
 
   &:hover {
     a {
@@ -72,7 +76,10 @@ const nextPostStlye = css`
 `;
 
 const postTitleStyle = css`
-  line-height: 3rem;
+  line-height: 2rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 function PostFooter({ nextPost, prevPost }: PostFooterProps) {
@@ -80,7 +87,7 @@ function PostFooter({ nextPost, prevPost }: PostFooterProps) {
     <div css={PostFooterWrapperStyle}>
       <div css={prevPostStyle}>
         {prevPost ? (
-          <IconContext.Provider value={{ size: '3rem' }}>
+          <IconContext.Provider value={{ size: '2rem' }}>
             <Link to={prevPost.path}>
               <div>
                 <IoIosArrowDropleftCircle />
@@ -94,7 +101,7 @@ function PostFooter({ nextPost, prevPost }: PostFooterProps) {
       </div>
       <div css={nextPostStlye}>
         {nextPost ? (
-          <IconContext.Provider value={{ size: '3rem' }}>
+          <IconContext.Provider value={{ size: '2rem' }}>
             <Link to={nextPost.path}>
               <div css={postTitleStyle}>{nextPost.title}</div>
               <div>

@@ -75,8 +75,8 @@ function SubTitle({ headings }: SubTitleProps) {
             headings.map(heading => {
               const value: string = heading.value
                 .replace(/\s/g, '-')
-                .replace(/\./g, '')
-                .replace(/\?/g, '');
+                .replace(/[\.\?\<\>\!\@\#\$\%\^\&\*\(\)\_\+\=\\\|]/g, '');
+              // .replace(/\?/g, '');
 
               const subTtitleWrapper = css`
                 padding-left: ${0.6 * (heading.depth - 1)}rem;
