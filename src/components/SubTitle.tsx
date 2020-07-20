@@ -66,6 +66,8 @@ function SubTitle({ headings }: SubTitleProps) {
     };
   }, []);
 
+  const regexp = /[\.\?\<\>\!\@\#\$\%\^\&\*\(\)\_\+\=\\\|]/g;
+
   return (
     <PostIndexWrapper>
       <div>
@@ -75,7 +77,7 @@ function SubTitle({ headings }: SubTitleProps) {
             headings.map(heading => {
               const value: string = heading.value
                 .replace(/\s/g, '-')
-                .replace(/[\.\?\<\>\!\@\#\$\%\^\&\*\(\)\_\+\=\\\|]/g, '');
+                .replace(regexp, '');
               // .replace(/\?/g, '');
 
               const subTtitleWrapper = css`
@@ -110,12 +112,8 @@ function SubTitle({ headings }: SubTitleProps) {
               `;
 
               const isCurHeading: boolean =
-                curHeading.replace(/-/g, '') ===
-                heading.value
-                  .replace(/\s/g, '')
-                  .replace(/\./g, '')
-                  .replace(/-/g, '')
-                  .replace(/\?/g, '');
+                curHeading.replace(/\s/g, '-').replace(regexp, '') ===
+                heading.value.replace(/\s/g, '-').replace(regexp, '');
 
               return (
                 <div
