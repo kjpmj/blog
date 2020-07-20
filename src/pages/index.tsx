@@ -32,6 +32,7 @@ const IndexPage: React.FC = () => {
             excerpt(pruneLength: 200)
           }
           relativeDirectory
+          name
         }
       }
       site {
@@ -47,9 +48,10 @@ const IndexPage: React.FC = () => {
   const { allFile, site } = useStaticQuery<Query>(LatestPostListQuery);
 
   const postDataList = allFile.nodes.map(
-    ({ childMarkdownRemark, relativeDirectory }) => ({
+    ({ childMarkdownRemark, relativeDirectory, name }) => ({
       title: childMarkdownRemark.frontmatter.title,
       relativeDirectory,
+      name,
       html: childMarkdownRemark.excerpt,
       mainImage:
         childMarkdownRemark.frontmatter.mainImage &&

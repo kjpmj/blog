@@ -33,6 +33,7 @@ export async function createPostListLayout({
             excerpt(pruneLength: 200)
           }
           relativeDirectory
+          name
         }
       }
     }
@@ -45,12 +46,13 @@ export async function createPostListLayout({
   const { allFile } = data;
 
   const postList: Object[] = allFile.nodes.map(
-    ({ childMarkdownRemark, relativeDirectory }) => ({
+    ({ childMarkdownRemark, relativeDirectory, name }) => ({
       title: childMarkdownRemark.frontmatter.title,
       mainImage:
         childMarkdownRemark.frontmatter.mainImage &&
         childMarkdownRemark.frontmatter.mainImage.childImageSharp.fluid.src,
       relativeDirectory,
+      name,
       html: childMarkdownRemark.excerpt,
       createAt: childMarkdownRemark.frontmatter.createAt,
     }),

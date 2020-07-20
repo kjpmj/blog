@@ -46,6 +46,7 @@ export async function createPostLayout({ actions, graphql }: createPagesType) {
                       title
                     }
                   }
+                  name
                 }
                 node {
                   childMarkdownRemark {
@@ -62,6 +63,7 @@ export async function createPostLayout({ actions, graphql }: createPagesType) {
                     }
                   }
                   relativeDirectory
+                  name
                 }
                 previous {
                   childMarkdownRemark {
@@ -69,6 +71,7 @@ export async function createPostLayout({ actions, graphql }: createPagesType) {
                       title
                     }
                   }
+                  name
                 }
               }
             }
@@ -85,25 +88,26 @@ export async function createPostLayout({ actions, graphql }: createPagesType) {
 
       data.allFile.edges.forEach(({ node, next, previous }) => {
         createPage({
-          path: `${node.relativeDirectory}/${node.childMarkdownRemark.frontmatter.title}`,
+          path: `${node.relativeDirectory}/${node.name}`,
           context: {
             html: node.childMarkdownRemark.html,
             title: node.childMarkdownRemark.frontmatter.title,
             description: node.childMarkdownRemark.frontmatter.description,
             relativeDirectory: node.relativeDirectory,
+            name: node.name,
             createAt: node.childMarkdownRemark.frontmatter.createAt,
             headings: node.childMarkdownRemark.headings,
             issueNumber: node.childMarkdownRemark.frontmatter.issueNumber,
             nextPost: next
               ? {
                   title: next.childMarkdownRemark.frontmatter.title,
-                  path: `${node.relativeDirectory}/${next.childMarkdownRemark.frontmatter.title}`,
+                  path: `${node.relativeDirectory}/${next.name}`,
                 }
               : null,
             prevPost: previous
               ? {
                   title: previous.childMarkdownRemark.frontmatter.title,
-                  path: `${node.relativeDirectory}/${previous.childMarkdownRemark.frontmatter.title}`,
+                  path: `${node.relativeDirectory}/${previous.name}`,
                 }
               : null,
           },

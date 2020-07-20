@@ -9,6 +9,7 @@ export type PostListProps = {
   postDataList: Array<{
     title: string;
     relativeDirectory: string;
+    name: string;
     mainImage: string;
     html: string;
     createAt: string;
@@ -95,9 +96,12 @@ function PostList({ postDataList, category }: PostListProps) {
     <PostRowListWrapper>
       <SEO title={category} lang="ko" />
       {postDataList.map(
-        ({ title, relativeDirectory, mainImage, html, createAt }) => {
+        ({ title, relativeDirectory, name, mainImage, html, createAt }) => {
           return (
-            <Link key={title} to={`/${relativeDirectory}/${title}`}>
+            <Link
+              key={`/${relativeDirectory}/${name}`}
+              to={`/${relativeDirectory}/${name}`}
+            >
               <PostRowWrapper>
                 <div css={postRowColWrpper}>
                   <div css={timeCategoryWrapper}>
