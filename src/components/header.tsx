@@ -9,6 +9,7 @@ import { IoMdHome, IoIosList } from 'react-icons/io';
 import { IconContext } from 'react-icons';
 import Category from './Category';
 import useOutsideAlerter from '../hooks/useOutsideAlerter';
+import Search from './Search';
 
 type HeaderProps = {
   siteTitle: string;
@@ -44,7 +45,6 @@ const HeaderContentStyle = css`
     height: 3rem;
     line-height: 4rem;
     margin-right: 1.5%;
-    cursor: pointer;
     font-family: 'NanumSquareRoundB';
     font-size: 1.2rem;
 
@@ -52,17 +52,19 @@ const HeaderContentStyle = css`
     }
   }
 
-  .icon-home {
-    &:hover {
-      color: ${palette.main()[5]};
-    }
-  }
+  .icon {
+    cursor: pointer;
 
-  .icon-category {
     &:hover {
       color: ${palette.main()[5]};
     }
   }
+`;
+
+const searchStyle = css`
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const backgroundStyle = css`
@@ -144,7 +146,7 @@ const Header = ({ path }: HeaderProps) => {
               <IconContext.Provider
                 value={{
                   size: '3rem',
-                  className: 'icon-category',
+                  className: 'icon',
                 }}
               >
                 <IoIosList />
@@ -152,17 +154,19 @@ const Header = ({ path }: HeaderProps) => {
               {<Category path={path} visible={categoryDisplay} />}
             </div>
             <div>
-              <IconContext.Provider
-                value={{ size: '3rem', className: 'icon-home' }}
-              >
+              <IconContext.Provider value={{ size: '3rem', className: 'icon' }}>
                 <Link to="/">
                   <IoMdHome />
                 </Link>
               </IconContext.Provider>
             </div>
+            <div css={searchStyle}>
+              <Search />
+            </div>
           </div>
         </header>
       </HeaderWrapper>
+
       <div css={backgroundStyle}></div>
     </>
   );
