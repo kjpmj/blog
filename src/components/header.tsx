@@ -62,7 +62,6 @@ const HeaderContentStyle = css`
 `;
 
 const searchStyle = css`
-  width: 30%;
   display: flex;
   justify-content: flex-end;
 `;

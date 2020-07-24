@@ -5,13 +5,14 @@ import { css } from '@emotion/core';
 import palette from '../style/palette';
 import SearchResult from './SearchResult';
 import _ from 'lodash';
+import useOutsideAlerter from '../hooks/useOutsideAlerter';
 
 type SearchProps = {};
 
 const searchContainerStyle = css`
   display: flex;
   flex-direction: column;
-  line-height: 1rem;
+  width: 100%;
 `;
 
 const searchWrapperStyle = css`
@@ -26,30 +27,43 @@ const inputWrapperStyle = css`
 `;
 
 const inputStyle = css`
-  height: 2rem;
+  height: 2.5rem;
   font-family: 'NanumSquareRound';
   font-size: 1rem;
-  width: 16rem;
+  width: 30rem;
   outline: none;
-  border-radius: 0.2rem;
-  border: 1.5px solid ${palette.gray[6]};
+  border: none;
+  background: none;
+  border-bottom: 1.5px solid ${palette.gray[6]};
 
   &:focus {
-    border: 1.5px solid ${palette.main()[5]};
+    border-bottom: 1.5px solid ${palette.main()[5]};
   }
-`;
-
-const iconWrapperStyle = css`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-right: 0.5rem;
-  cursor: auto;
 `;
 
 function Search() {
   const [visible, setVisible] = useState('');
   const inputRef: React.MutableRefObject<HTMLInputElement> = useRef(null);
+  const searchRef: React.MutableRefObject<HTMLDivElement> = useRef(null);
+
+  let curPosition = 0;
+
+  useEffect(() => {
+    const throttle = _.throttle(() => {
+      if (window.scrollY > curPosition) {
+        setVisible('');
+      }
+      curPosition = window.scrollY;
+
+      return () => {
+        window.removeEventListener('scroll', throttle);
+      };
+    }, 100);
+
+    window.addEventListener('scroll', throttle);
+  }, []);
+
+  useOutsideAlerter(searchRef, () => setVisible(''));
 
   const onDebounceChange = _.debounce((target: HTMLInputElement) => {
     setVisible(target.value);
@@ -59,23 +73,19 @@ function Search() {
     onDebounceChange(e.target);
   };
 
+  const onCLick = (e: React.MouseEvent<HTMLInputElement>) => {
+    setVisible('1');
+  };
+
   return (
-    <div css={searchContainerStyle}>
+    <div css={searchContainerStyle} ref={searchRef}>
       <div css={searchWrapperStyle}>
-        <div css={iconWrapperStyle}>
-          <IconContext.Provider
-            value={{
-              size: '2rem',
-            }}
-          >
-            <IoMdSearch />
-          </IconContext.Provider>
-        </div>
         <div css={inputWrapperStyle}>
           <input
             css={inputStyle}
             placeholder="Search Post..."
             onChange={onChange}
+            onClick={onCLick}
             ref={inputRef}
           />
         </div>
