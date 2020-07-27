@@ -1,13 +1,9 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { IconContext } from 'react-icons/lib';
-import { IoMdSearch } from 'react-icons/io';
+import React, { useState, useEffect, useRef } from 'react';
 import { css } from '@emotion/core';
 import palette from '../style/palette';
 import SearchResult from './SearchResult';
 import _ from 'lodash';
 import useOutsideAlerter from '../hooks/useOutsideAlerter';
-
-type SearchProps = {};
 
 const searchContainerStyle = css`
   display: flex;
@@ -30,7 +26,7 @@ const inputStyle = css`
   height: 2.5rem;
   font-family: 'NanumSquareRound';
   font-size: 1rem;
-  width: 30rem;
+  width: 200%;
   outline: none;
   border: none;
   background: none;
@@ -54,13 +50,13 @@ function Search() {
         setVisible('');
       }
       curPosition = window.scrollY;
-
-      return () => {
-        window.removeEventListener('scroll', throttle);
-      };
     }, 100);
 
     window.addEventListener('scroll', throttle);
+
+    return () => {
+      window.removeEventListener('scroll', throttle);
+    };
   }, []);
 
   useOutsideAlerter(searchRef, () => setVisible(''));
@@ -73,8 +69,16 @@ function Search() {
     onDebounceChange(e.target);
   };
 
-  const onCLick = (e: React.MouseEvent<HTMLInputElement>) => {
+  const onClick = (e: React.MouseEvent<HTMLInputElement>) => {
     setVisible('1');
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // 아래 방향키 버튼 입력 시
+    // if (e.keyCode === 40) {
+    console.log(e.keyCode);
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: '9' }));
+    // }
   };
 
   return (
@@ -85,12 +89,15 @@ function Search() {
             css={inputStyle}
             placeholder="Search Post..."
             onChange={onChange}
-            onClick={onCLick}
+            onClick={onClick}
+            onKeyDown={onKeyDown}
             ref={inputRef}
           />
         </div>
       </div>
-      {visible && <SearchResult text={inputRef.current.value} />}
+      {visible && (
+        <SearchResult text={inputRef.current.value} inputRef={inputRef} />
+      )}
     </div>
   );
 }

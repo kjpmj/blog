@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Query } from '../../types/graphql-types';
 import { useStaticQuery, graphql, Link } from 'gatsby';
 import { css } from '@emotion/core';
@@ -7,22 +7,22 @@ import palette from '../style/palette';
 const searchResultContainerStyle = css`
   display: flex;
   flex-direction: column;
-  /* border: 1px solid ${palette.gray[6]}; */
   background-color: white;
-  min-width: 30.3rem;
-  max-height: 300px;
+  min-width: 30%;
+  max-height: 30rem;
   position: absolute;
   top: 4rem;
   overflow-y: auto;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   padding-left: 0.5rem;
+  font-family: NanumSquareRound;
 
   ::-webkit-scrollbar {
     width: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    background-color: transparent
+    background-color: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -46,6 +46,11 @@ const searchRowStyle = css`
   &:hover {
     color: ${palette.main()[5]};
   }
+
+  &:focus {
+    background-color: ${palette.gray[1]};
+    outline: none;
+  }
 `;
 
 const categoryStyle = css`
@@ -67,10 +72,12 @@ const noResultStyle = css`
 
 type SearchResultProps = {
   text: string;
+  inputRef: React.MutableRefObject<HTMLInputElement>;
 };
 
-function SearchResult({ text }: SearchResultProps) {
+function SearchResult({ text, inputRef }: SearchResultProps) {
   if (!text) return null;
+  const linkRef = useRef([]);
 
   const queryResult = graphql`
     {
@@ -110,6 +117,34 @@ function SearchResult({ text }: SearchResultProps) {
       .includes(text.toUpperCase()),
   );
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLAnchorElement>) => {
+    const targetIndex = linkRef.current.findIndex(
+      (el: HTMLAnchorElement) => el === e.target,
+    );
+
+    // 아래 방향키
+    if (e.keyCode === 40) {
+      e.preventDefault();
+      if (targetIndex < linkRef.current.length - 1) {
+        if (linkRef.current[targetIndex + 1]) {
+          linkRef.current[targetIndex + 1].focus();
+        }
+      }
+    }
+
+    // 위 방향키
+    if (e.keyCode === 38) {
+      e.preventDefault();
+      if (targetIndex > 0) {
+        if (linkRef.current[targetIndex - 1]) {
+          linkRef.current[targetIndex - 1].focus();
+        }
+      } else {
+        inputRef.current.focus();
+      }
+    }
+  };
+
   if (filteredData.length === 0)
     return (
       <div css={searchResultContainerStyle}>
@@ -119,16 +154,20 @@ function SearchResult({ text }: SearchResultProps) {
 
   return (
     <div css={searchResultContainerStyle}>
-      {filteredData.map(({ childMarkdownRemark, relativeDirectory, name }) => (
-        <Link
-          key={`/${relativeDirectory}/${name}`}
-          to={`/${relativeDirectory}/${name}`}
-          css={searchRowStyle}
-        >
-          <div css={categoryStyle}>{relativeDirectory}</div>
-          <div css={titleStyle}>{childMarkdownRemark.frontmatter.title}</div>
-        </Link>
-      ))}
+      {filteredData.map(
+        ({ childMarkdownRemark, relativeDirectory, name }, i) => (
+          <Link
+            key={`/${relativeDirectory}/${name}`}
+            to={`/${relativeDirectory}/${name}`}
+            css={searchRowStyle}
+            onKeyDown={onKeyDown}
+            ref={el => (linkRef.current[i] = el)}
+          >
+            <div css={categoryStyle}>{relativeDirectory}</div>
+            <div css={titleStyle}>{childMarkdownRemark.frontmatter.title}</div>
+          </Link>
+        ),
+      )}
     </div>
   );
 }
