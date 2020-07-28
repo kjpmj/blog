@@ -26,7 +26,7 @@ const inputStyle = css`
   height: 2.5rem;
   font-family: 'NanumSquareRound';
   font-size: 1rem;
-  width: 200%;
+  width: 20rem;
   outline: none;
   border: none;
   background: none;

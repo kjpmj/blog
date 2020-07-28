@@ -3,18 +3,18 @@ import { Query } from '../../types/graphql-types';
 import { useStaticQuery, graphql, Link } from 'gatsby';
 import { css } from '@emotion/core';
 import palette from '../style/palette';
+import _ from 'lodash';
 
 const searchResultContainerStyle = css`
   display: flex;
   flex-direction: column;
   background-color: white;
-  min-width: 30%;
+  min-width: 20rem;
   max-height: 30rem;
   position: absolute;
   top: 4rem;
   overflow-y: auto;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  padding-left: 0.5rem;
   font-family: NanumSquareRound;
 
   ::-webkit-scrollbar {
@@ -42,6 +42,8 @@ const searchRowStyle = css`
   justify-content: center;
   min-height: 3.5rem;
   line-height: 1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 
   &:hover {
     color: ${palette.main()[5]};
@@ -118,14 +120,7 @@ function SearchResult({ text, inputRef }: SearchResultProps, ref) {
   );
 
   useEffect(() => {
-    // const tempRef = linkRef.current.concat();
-    // linkRef.current = new Array(filteredData.length);
-
-    // linkRef.current = linkRef.current.filter(el => el !== null);
-
-    ref.current = linkRef.current[0];
-
-    console.log(linkRef.current);
+    ref.current = _.find(linkRef.current, el => el !== null);
   }, [text]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLAnchorElement>) => {
@@ -136,22 +131,32 @@ function SearchResult({ text, inputRef }: SearchResultProps, ref) {
     // 아래 방향키
     if (e.keyCode === 40) {
       e.preventDefault();
+
       if (targetIndex < linkRef.current.length - 1) {
-        if (linkRef.current[targetIndex + 1]) {
-          linkRef.current[targetIndex + 1].focus();
-        }
+        const target = _.find(
+          linkRef.current,
+          el => el !== null,
+          targetIndex + 1,
+        );
+
+        if (target) target.focus();
       }
     }
 
     // 위 방향키
     if (e.keyCode === 38) {
       e.preventDefault();
-      if (targetIndex > 0) {
-        if (linkRef.current[targetIndex - 1]) {
-          linkRef.current[targetIndex - 1].focus();
-        }
-      } else {
+
+      if (ref.current === e.target) {
         inputRef.current.focus();
+      } else {
+        const target = _.findLast(
+          linkRef.current,
+          el => el !== null,
+          targetIndex - 1,
+        );
+
+        if (target) target.focus();
       }
     }
   };
