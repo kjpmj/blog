@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Query } from '../../types/graphql-types';
 import { useStaticQuery, graphql, Link } from 'gatsby';
 import { css } from '@emotion/core';
@@ -75,7 +75,7 @@ type SearchResultProps = {
   inputRef: React.MutableRefObject<HTMLInputElement>;
 };
 
-function SearchResult({ text, inputRef }: SearchResultProps) {
+function SearchResult({ text, inputRef }: SearchResultProps, ref) {
   if (!text) return null;
   const linkRef = useRef([]);
 
@@ -116,6 +116,17 @@ function SearchResult({ text, inputRef }: SearchResultProps) {
       .toUpperCase()
       .includes(text.toUpperCase()),
   );
+
+  useEffect(() => {
+    // const tempRef = linkRef.current.concat();
+    // linkRef.current = new Array(filteredData.length);
+
+    // linkRef.current = linkRef.current.filter(el => el !== null);
+
+    ref.current = linkRef.current[0];
+
+    console.log(linkRef.current);
+  }, [text]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLAnchorElement>) => {
     const targetIndex = linkRef.current.findIndex(
@@ -161,7 +172,9 @@ function SearchResult({ text, inputRef }: SearchResultProps) {
             to={`/${relativeDirectory}/${name}`}
             css={searchRowStyle}
             onKeyDown={onKeyDown}
-            ref={el => (linkRef.current[i] = el)}
+            ref={el => {
+              linkRef.current[i] = el;
+            }}
           >
             <div css={categoryStyle}>{relativeDirectory}</div>
             <div css={titleStyle}>{childMarkdownRemark.frontmatter.title}</div>
@@ -172,4 +185,4 @@ function SearchResult({ text, inputRef }: SearchResultProps) {
   );
 }
 
-export default React.memo(SearchResult);
+export default React.memo(React.forwardRef(SearchResult));

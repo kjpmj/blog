@@ -41,6 +41,9 @@ function Search() {
   const [visible, setVisible] = useState('');
   const inputRef: React.MutableRefObject<HTMLInputElement> = useRef(null);
   const searchRef: React.MutableRefObject<HTMLDivElement> = useRef(null);
+  const firstAnchorRef: React.MutableRefObject<HTMLAnchorElement> = useRef(
+    null,
+  );
 
   let curPosition = 0;
 
@@ -74,11 +77,19 @@ function Search() {
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // 아래 방향키 버튼 입력 시
-    // if (e.keyCode === 40) {
-    console.log(e.keyCode);
-    document.dispatchEvent(new KeyboardEvent('keydown', { key: '9' }));
-    // }
+    // ESC 버튼
+    if (e.keyCode === 27) {
+      setVisible('');
+    }
+
+    // 아래 방향키 버튼
+    if (e.keyCode === 40) {
+      e.preventDefault();
+
+      if (firstAnchorRef.current) {
+        firstAnchorRef.current.focus();
+      }
+    }
   };
 
   return (
@@ -96,7 +107,11 @@ function Search() {
         </div>
       </div>
       {visible && (
-        <SearchResult text={inputRef.current.value} inputRef={inputRef} />
+        <SearchResult
+          text={inputRef.current.value}
+          inputRef={inputRef}
+          ref={firstAnchorRef}
+        />
       )}
     </div>
   );
