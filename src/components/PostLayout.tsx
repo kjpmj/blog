@@ -13,6 +13,7 @@ import {
 import palette from '../style/palette';
 import SubTitle from './SubTitle';
 import '../style/index.css';
+import font from '../style/font';
 
 type PostLayoutProps = {
   children: ReactNode;
@@ -47,7 +48,7 @@ const PostContentWarpper = styled(ContentContainer)`
     }
 
     &.language-java {
-      font-family: D2Coding;
+      font-family: ${font.d2.regular};
     }
 
     &.language-java + span.line-numbers-rows {

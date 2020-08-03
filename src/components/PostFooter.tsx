@@ -7,6 +7,7 @@ import {
 import { IconContext } from 'react-icons';
 import { Link } from 'gatsby';
 import palette from '../style/palette';
+import font from '../style/font';
 
 type PostFooterProps = {
   nextPost: {
@@ -28,7 +29,7 @@ const PostFooterWrapperStyle = css`
   padding-bottom: 2rem;
   margin-top: 5rem;
   font-size: 1.2rem;
-  font-family: 'NanumSquareRoundB';
+  font-family: ${font.main().semi_bold};
 
   a {
     color: ${palette.gray[8]};

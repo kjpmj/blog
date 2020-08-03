@@ -4,6 +4,7 @@ import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 import SEO from './seo';
+import font from '../style/font';
 
 export type PostListProps = {
   postDataList: Array<{
@@ -53,7 +54,7 @@ const mainImageWrapper = css`
 
 const titleStyle = css`
   font-size: 2rem;
-  font-family: NanumSquareRoundB, sans-serif;
+  font-family: ${font.main().medium};
   margin-bottom: 1rem;
 
   title {

@@ -5,6 +5,7 @@ import palette from '../style/palette';
 import { RightContentContainer } from './CommonStyle';
 import styled from '@emotion/styled';
 import _ from 'lodash';
+import font from '../style/font';
 
 type SubTitleProps = {
   headings: MarkdownHeading[];
@@ -28,7 +29,7 @@ const PostIndexWrapper = styled(RightContentContainer)`
 `;
 
 const SubTitleStyle = css`
-  font-family: NanumSquareRoundEB, sans-serif;
+  font-family: ${font.main().semi_bold};
   font-size: 1.618rem;
   padding-bottom: 1rem;
   word-break: break-all;

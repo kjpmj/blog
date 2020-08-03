@@ -10,6 +10,7 @@ import { IconContext } from 'react-icons';
 import Category from './Category';
 import useOutsideAlerter from '../hooks/useOutsideAlerter';
 import Search from './Search';
+import font from '../style/font';
 
 type HeaderProps = {
   siteTitle: string;
@@ -45,7 +46,7 @@ const HeaderContentStyle = css`
     height: 3rem;
     line-height: 4rem;
     margin-right: 1.5%;
-    font-family: 'NanumSquareRoundB';
+    font-family: ${font.main().semi_bold};
     font-size: 1.2rem;
 
     > span {

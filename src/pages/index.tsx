@@ -64,7 +64,7 @@ const IndexPage: React.FC = () => {
     <PostListLayout path="/">
       <PostList
         postDataList={postDataList}
-        category={site.siteMetadata.author}
+        category={site.siteMetadata.title}
       />
     </PostListLayout>
   );

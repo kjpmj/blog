@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import _ from 'lodash';
 import palette from '../style/palette';
 import { css } from '@emotion/core';
+import font from '../style/font';
 
 const CategoryWrapper = styled.div`
   z-index: 1100;
@@ -30,7 +31,7 @@ const CategoryLinkWrapper = styled.div`
 
 const CurrentCategoryStyle = css`
   a {
-    font-family: 'NanumSquareRoundB';
+    font-family: ${font.main().semi_bold};
     color: ${palette.main()[5]};
     transform: scale(1.1);
     transform-origin: 0 100%;

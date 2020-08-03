@@ -4,6 +4,7 @@ import palette from '../style/palette';
 import SearchResult from './SearchResult';
 import _ from 'lodash';
 import useOutsideAlerter from '../hooks/useOutsideAlerter';
+import font from '../style/font';
 
 const searchContainerStyle = css`
   display: flex;
@@ -24,7 +25,7 @@ const inputWrapperStyle = css`
 
 const inputStyle = css`
   height: 2.5rem;
-  font-family: 'NanumSquareRound';
+  font-family: ${font.main().regular};
   font-size: 1rem;
   width: 20rem;
   outline: none;
