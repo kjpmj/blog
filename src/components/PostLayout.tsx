@@ -48,7 +48,7 @@ const PostContentWarpper = styled(ContentContainer)`
     }
 
     &.language-java {
-      font-family: ${font.d2.regular};
+      font-family: ${font.main().regular};
     }
 
     &.language-java + span.line-numbers-rows {

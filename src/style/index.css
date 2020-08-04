@@ -1,63 +1,65 @@
 @font-face {
-  font-family: 'D2Coding';
-  src: url('../style/font/D2Coding.woff2') format('woff2'),
-    url('../style/font/D2Coding.woff') format('woff'),
-    url('../style/font/D2Coding.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'D2CodingBold';
-  src: url('../style/font/D2CodingBold.woff2') format('woff2'),
-    url('../style/font/D2CodingBold.woff') format('woff'),
-    url('../style/font/D2CodingBold.ttf') format('truetype');
-}
-
-@font-face {
   font-family: 'IBM-Plex-Sans-Bold';
-  src: url('../style/font/IBM/IBMPlexSansKR-Bold.woff2') format('woff2'),
+  src: local('sans-serif'),
+    url('../style/font/IBM/IBMPlexSansKR-Bold.woff2') format('woff2'),
     url('../style/font/IBM/IBMPlexSansKR-Bold.woff') format('woff');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'IBM-Plex-Sans-SemiBold';
-  src: url('../style/font/IBM/IBMPlexSansKR-SemiBold.woff2') format('woff2'),
+  src: local('sans-serif'),
+    url('../style/font/IBM/IBMPlexSansKR-SemiBold.woff2') format('woff2'),
     url('../style/font/IBM/IBMPlexSansKR-SemiBold.woff') format('woff');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'IBM-Plex-Sans-Medium';
-  src: url('../style/font/IBM/IBMPlexSansKR-Medium.woff2') format('woff2'),
+  src: local('sans-serif'),
+    url('../style/font/IBM/IBMPlexSansKR-Medium.woff2') format('woff2'),
     url('../style/font/IBM/IBMPlexSansKR-Medium.woff') format('woff');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'IBM-Plex-Sans-Text';
-  src: url('../style/font/IBM/IBMPlexSansKR-Text.woff2') format('woff2'),
+  src: local('sans-serif'),
+    url('../style/font/IBM/IBMPlexSansKR-Text.woff2') format('woff2'),
     url('../style/font/IBM/IBMPlexSansKR-Text.woff') format('woff');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'IBM-Plex-Sans-Regular';
-  src: url('../style/font/IBM/IBMPlexSansKR-Regular.woff2') format('woff2'),
+  src: local('sans-serif'),
+    url('../style/font/IBM/IBMPlexSansKR-Regular.woff2') format('woff2'),
     url('../style/font/IBM/IBMPlexSansKR-Regular.woff') format('woff');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'IBM-Plex-Sans-Thin';
-  src: url('../style/font/IBM/IBMPlexSansKR-Thin.woff2') format('woff2'),
+  src: local('sans-serif'),
+    url('../style/font/IBM/IBMPlexSansKR-Thin.woff2') format('woff2'),
     url('../style/font/IBM/IBMPlexSansKR-Thin.woff') format('woff');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'IBM-Plex-Sans-Light';
-  src: url('../style/font/IBM/IBMPlexSansKR-Light.woff2') format('woff2'),
+  src: local('sans-serif'),
+    url('../style/font/IBM/IBMPlexSansKR-Light.woff2') format('woff2'),
     url('../style/font/IBM/IBMPlexSansKR-Light.woff') format('woff');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'IBM-Plex-Sans-ExtraLight';
-  src: url('../style/font/IBM/IBMPlexSansKR-ExtraLight.woff2') format('woff2'),
+  src: local('sans-serif'),
+    url('../style/font/IBM/IBMPlexSansKR-ExtraLight.woff2') format('woff2'),
     url('../style/font/IBM/IBMPlexSansKR-ExtraLight.woff') format('woff');
+  font-display: swap;
 }
 
 html {

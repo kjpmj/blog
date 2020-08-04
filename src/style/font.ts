@@ -18,10 +18,6 @@ const font = {
     extra_light: 'JetBrainsMono-ExtraLight',
     extra_light_italic: 'JetBrainsMono-SemiLight-Italic',
   },
-  d2: {
-    bold: 'D2CodingBold',
-    regular: 'D2Coding',
-  },
   IBM: {
     bold: 'IBM-Plex-Sans-Bold',
     semi_bold: 'IBM-Plex-Sans-SemiBold',

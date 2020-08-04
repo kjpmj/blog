@@ -1,6 +1,5 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import { css } from '@emotion/core';
-import palette from '../style/palette';
 
 type UtterancesProps = {
   repo: string;
