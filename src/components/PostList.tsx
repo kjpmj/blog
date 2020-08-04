@@ -54,8 +54,8 @@ const mainImageWrapper = css`
 
 const titleStyle = css`
   font-size: 2rem;
-  font-family: ${font.main().medium};
   margin-bottom: 1rem;
+  font-weight: 600;
 
   title {
     display: block;

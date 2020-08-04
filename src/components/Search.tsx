@@ -25,7 +25,6 @@ const inputWrapperStyle = css`
 
 const inputStyle = css`
   height: 2.5rem;
-  font-family: ${font.main().regular};
   font-size: 1rem;
   width: 20rem;
   outline: none;

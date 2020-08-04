@@ -29,7 +29,7 @@ const PostIndexWrapper = styled(RightContentContainer)`
 `;
 
 const SubTitleStyle = css`
-  font-family: ${font.main().semi_bold};
+  font-weight: 600;
   font-size: 1.618rem;
   padding-bottom: 1rem;
   word-break: break-all;

@@ -31,7 +31,7 @@ const CategoryLinkWrapper = styled.div`
 
 const CurrentCategoryStyle = css`
   a {
-    font-family: ${font.main().semi_bold};
+    font-weight: 600;
     color: ${palette.main()[5]};
     transform: scale(1.1);
     transform-origin: 0 100%;

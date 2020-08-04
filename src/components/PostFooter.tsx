@@ -29,7 +29,7 @@ const PostFooterWrapperStyle = css`
   padding-bottom: 2rem;
   margin-top: 5rem;
   font-size: 1.2rem;
-  font-family: ${font.main().semi_bold};
+  font-weight: 600;
 
   a {
     color: ${palette.gray[8]};

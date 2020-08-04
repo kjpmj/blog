@@ -46,7 +46,6 @@ const HeaderContentStyle = css`
     height: 3rem;
     line-height: 4rem;
     margin-right: 1.5%;
-    font-family: ${font.main().semi_bold};
     font-size: 1.2rem;
 
     > span {
